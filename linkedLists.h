@@ -10,10 +10,10 @@
 
 #include <stdlib.h>
 
-typedef struct LinkedList{
+typedef struct LinkedList {
 	int val;
-	LinkedList* next;
-	LinkedList* prev;
+	struct LinkedList* next;
+	struct LinkedList* prev;
 } LinkedList;
 
 LinkedList* ll_create(int val);

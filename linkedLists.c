@@ -8,6 +8,8 @@
  * implement linked lists
  *****************************************************************************/
 
+#include "linkedLists.h"
+
 
 LinkedList* ll_create(int val){
 	LinkedList* lst = (LinkedList*)malloc(sizeof(LinkedList));
