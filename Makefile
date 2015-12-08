@@ -1,8 +1,8 @@
 CC=gcc
-CCFLAGS=-Wall -Werror -O2
+CCFLAGS=-Wall -Werror -std=c99 -O2
 CCLIBS=
 TARGET=dijkstra
-OBJS=main.o
+OBJS=linkedLists.o main.o
 
 all: $(TARGET)
 
