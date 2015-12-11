@@ -11,9 +11,11 @@
 #include "extendLists.h"
 
 ExtendList el_create(int len){
-	return { dispLength = len ; 
-			 curLength = 0 ; 
-			 list = (int*)malloc(len*(sizeof(int)) };
+	ExtendList lst ;
+	lst.dispLength = len ;
+	lst.curLength = 0 ; 
+	lst.list = (int*)malloc(len*(sizeof(int)));
+	return lst;
 }
 
 void el_clean(ExtendList* lst){

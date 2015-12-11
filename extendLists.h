@@ -16,7 +16,7 @@ typedef struct ExtendList {
 	int* list;
 } ExtendList;
 
-ExtendList* el_create(int len);
+ExtendList el_create(int len);
 
 void el_clean(ExtendList* lst);
 
