@@ -1,4 +1,6 @@
 #include <stdio.h>
+
+/* DEBUG --- LinkedList testing
 #include "linkedLists.h"
 
 int main(void) {
@@ -36,6 +38,40 @@ int main(void) {
 	}
 
 	ll_clean(ll);
+	return 0;
+}
+*****************************************************************************/
+
+#include "extendLists.h"
+
+int main(void) {
+	ExtendList l = el_create(1);
+	int running = 1;
+	while(running) {
+		char act = getchar();
+		int val;
+		while(act == '\n') getchar();
+		switch(act) {
+			case 'l':
+				for(int pos=0; pos < l.curLength; pos++)
+					printf("%d ", (l.list)[pos]);
+				puts("");
+				break;
+			case 'a':
+				scanf("%d", &val);
+				el_push_back(&l, val);
+				printf("cur=%d avail=%d\n", l.curLength, l.availLength);
+				break;
+			case 'd':
+				printf("Popped %d, ", (l.list)[l.curLength-1]);
+				el_pop_back(&l);
+				printf("cur=%d avail=%d\n", l.curLength, l.availLength);
+				break;
+			default:
+				printf("Unknown command.\n");
+		}
+	}
+	el_clean(&l);
 	return 0;
 }
 
