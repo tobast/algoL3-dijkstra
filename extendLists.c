@@ -10,9 +10,7 @@
 
 #include "extendLists.h"
 
-//FIXME fix prototypes too. (eg. el_create returns ExtendList, not ExtendList*)
-
-ExtendList* el_create(int len){
+ExtendList el_create(int len){
 	return { dispLength = len ; 
 			 curLength = 0 ; 
 			 list = (int*)malloc(len*(sizeof(int)) };
@@ -20,7 +18,6 @@ ExtendList* el_create(int len){
 
 void el_clean(ExtendList* lst){
 	free(lst->list);
-//	free(lst); //FIXME according to el_create() modifications
 }
 
 void el_push_back(ExtendList* lst, int val){
