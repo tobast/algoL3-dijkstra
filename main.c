@@ -50,7 +50,7 @@ int main(void) {
 	while(running) {
 		char act = getchar();
 		int val;
-		while(act == '\n') getchar();
+		while(act == '\n') act=getchar();
 		switch(act) {
 			case 'l':
 				for(int pos=0; pos < l.curLength; pos++)
@@ -66,6 +66,9 @@ int main(void) {
 				printf("Popped %d, ", (l.list)[l.curLength-1]);
 				el_pop_back(&l);
 				printf("cur=%d avail=%d\n", l.curLength, l.availLength);
+				break;
+			case 'q':
+				running=0;
 				break;
 			default:
 				printf("Unknown command.\n");
