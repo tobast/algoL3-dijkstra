@@ -34,6 +34,8 @@ void ll_insert_next(LinkedList* lst, int val){
 }
 
 void ll_delete_next(LinkedList* lst){
+	if(lst->next == lst) // The list contains a single element
+		assert(0);
 	LinkedList* delLst = lst->next;
 	lst->next = delLst->next;
 	delLst->next->prev = lst;
