@@ -9,6 +9,7 @@
  *****************************************************************************/
 
 #include <stdlib.h>
+#include <assert.h>
 
 typedef struct ExtendList {
 	int availLength;
