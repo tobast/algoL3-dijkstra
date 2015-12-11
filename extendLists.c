@@ -12,7 +12,7 @@
 
 ExtendList el_create(int len){
 	ExtendList lst ;
-	lst.availLength = max(len,1) ;
+	lst.availLength = (len > 1) ? len : 1;
 	lst.curLength = 0 ; 
 	lst.list = (int*)malloc(len*(sizeof(int)));
 	return lst;
