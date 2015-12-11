@@ -4,12 +4,12 @@ CCLIBS=
 TARGET=dijkstra
 OBJS=linkedLists.o extendLists.o main.o
 
-all: $(TARGET)
+#all: $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(CC) $^ $(CCFLAGS) $(CCLIBS) -o $@
 
-%.o: %.cpp
+%.o: %.c
 	$(CC) -c $< $(CCLIBS) $(CCFLAGS) -o $@
 
 .PHONY: clean
