@@ -11,7 +11,7 @@
 #include <stdlib.h>
 
 typedef struct ExtendList {
-	int dispLength;
+	int availLength;
 	int curLength;
 	int* list;
 } ExtendList;
