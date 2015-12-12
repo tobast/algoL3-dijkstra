@@ -22,6 +22,7 @@ Tree tr_create(TreeNode val) {
 void tr_addChild(Tree* node, Tree* subNode) {
 	subNode->sibling = node->child;
 	node->child = subNode;
+	node->subtreeSize += subNode->subtreeSize;
 }
 
 Tree* tr_merge(Tree* tr1, Tree* tr2) {
