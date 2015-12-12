@@ -21,6 +21,11 @@ typedef struct Tree {
 } Tree;
 
 /**
+ * Creates a tree node without any children nor siblings.
+ **/
+Tree tr_create(TreeNode val);
+
+/**
  * Adds subNode as the first child of node, and its previous child as the
  * sibling of subNode.
  * WARNING! The siblings of subNode are lost in the process!

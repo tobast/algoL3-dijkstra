@@ -10,6 +10,15 @@
 
 #include "tree.h"
 
+Tree tr_create(TreeNode val) {
+	Tree tr;
+	tr.child = NULL;
+	tr.sibling = NULL;
+	tr.subtreeSize = 0;
+	tr.val = val;
+	return tr;
+}
+
 void tr_addChild(Tree* node, Tree* subNode) {
 	subNode->sibling = node->child;
 	node->child = subNode;
