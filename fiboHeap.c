@@ -8,6 +8,8 @@
  * Implements a fibonaccci heap
  *****************************************************************************/
 
+#include "fiboHeap.h"
+
 FiboHeap fh_create(TreeNode initialVal) {
 
 }

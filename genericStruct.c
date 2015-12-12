@@ -8,6 +8,8 @@
  * Defines constructors for the defined data structures.
  *****************************************************************************/
 
+#include "genericStruct.h"
+
 TreeNode makeTreeNode(int weight, int graphNode) {
 	TreeNode t;
 	t.weight = weight;
