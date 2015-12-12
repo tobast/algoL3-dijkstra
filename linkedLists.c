@@ -11,7 +11,7 @@
 #include "linkedLists.h"
 
 
-LinkedList* ll_create(int val){
+LinkedList* ll_create(LinkedListVal val){
 	LinkedList* lst = (LinkedList*)malloc(sizeof(LinkedList));
 	lst->next = lst;
 	lst->prev = lst;
@@ -25,7 +25,7 @@ void ll_clean(LinkedList* lst){
 	free(lst);
 }
 
-void ll_insert_next(LinkedList* lst, int val){
+void ll_insert_next(LinkedList* lst, LinkedListVal val){
 	LinkedList* newlst = (LinkedList*)malloc(sizeof(LinkedList));
 	newlst->next = lst->next;
 	newlst->prev = lst;

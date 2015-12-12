@@ -10,17 +10,20 @@
 
 #include <stdlib.h>
 #include <assert.h>
+#include "tree.h"
+
+typedef Tree LinkedListVal; // Alias to allow easy modification
 
 typedef struct LinkedList {
-	int val;
+	LinkedListVal val;
 	struct LinkedList* next;
 	struct LinkedList* prev;
 } LinkedList;
 
-LinkedList* ll_create(int val);
+LinkedList* ll_create(LinkedListVal val);
 
 void ll_clean(LinkedList* lst);
 
-void ll_insert_next(LinkedList* lst, int val);
+void ll_insert_next(LinkedList* lst, LinkedListVal val);
 
 void ll_delete_next(LinkedList* lst);
