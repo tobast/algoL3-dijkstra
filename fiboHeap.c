@@ -11,7 +11,12 @@
 #include "fiboHeap.h"
 
 FiboHeap fh_create(TreeNode initialVal) {
+	FiboHeap fh;
+	fh.trees = ll_create(tr_create(initialVal));
+}
 
+void fh_clean(FiboHeap* fh) {
+	ll_clean(fh->trees);
 }
 
 TreeNode fh_getMin(FiboHeap* fh) {

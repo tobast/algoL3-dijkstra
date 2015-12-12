@@ -19,6 +19,10 @@ Tree tr_create(TreeNode val) {
 	return tr;
 }
 
+void tr_clean(Tree* node) {
+	//TODO
+}
+
 void tr_addChild(Tree* node, Tree* subNode) {
 	subNode->sibling = node->child;
 	node->child = subNode;

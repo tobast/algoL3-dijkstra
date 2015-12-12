@@ -39,6 +39,8 @@ void ll_delete_next(LinkedList* lst){
 	LinkedList* delLst = lst->next;
 	lst->next = delLst->next;
 	delLst->next->prev = lst;
+	
+	tr_clean(delLst.val);
 	free(delLst);
 }
 

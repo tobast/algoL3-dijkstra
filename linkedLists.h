@@ -15,7 +15,7 @@
 #include <assert.h>
 #include "tree.h"
 
-typedef Tree LinkedListVal; // Alias to allow easy modification
+typedef Tree* LinkedListVal; // Alias to allow easy modification
 
 typedef struct LinkedList {
 	LinkedListVal val;

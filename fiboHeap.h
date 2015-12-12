@@ -26,6 +26,11 @@ typedef struct FiboHeap {
 FiboHeap fh_create(TreeNode initialVal);
 
 /**
+ * Deallocates all the allocated memory.
+ **/
+void fh_clean(FiboHeap* fh);
+
+/**
  * Gets the minimal value from the given fibonacci heap. Read-only.
  **/
 TreeNode fh_getMin(FiboHeap* fh);

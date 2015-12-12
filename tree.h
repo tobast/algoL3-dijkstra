@@ -26,6 +26,11 @@ typedef struct Tree {
 Tree tr_create(TreeNode val);
 
 /**
+ * Deallocates all the allocated memory
+ **/
+void tr_clean(Tree* node);
+
+/**
  * Adds subNode as the first child of node, and its previous child as the
  * sibling of subNode.
  * WARNING! The siblings of subNode are lost in the process!
