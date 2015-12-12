@@ -8,7 +8,7 @@
  * Implements a tree of TreeNodes
  *****************************************************************************/
 
-#include "tree.c"
+#include "tree.h"
 
 void tr_addChild(Tree* node, Tree* subNode) {
 	subNode->sibling = node->child;
@@ -16,5 +16,11 @@ void tr_addChild(Tree* node, Tree* subNode) {
 }
 
 Tree* tr_merge(Tree* tr1, Tree* tr2) {
-	//TODO implement
+	if(tr1->val.weight < tr2->val.weight) {
+		tr_addChild(tr1, tr2);
+		return tr1;
+	}
+	tr_addChild(tr2, tr1);
+	return tr2;
 }
+

@@ -11,8 +11,8 @@
 #include "genericStruct.h"
 
 typedef struct Tree {
-	Tree* child;
-	Tree* sibling;
+	struct Tree* child;
+	struct Tree* sibling;
 	int subtreeSize;
 	TreeNode val;
 } Tree;
