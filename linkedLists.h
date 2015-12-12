@@ -8,6 +8,9 @@
  * implement linked lists
  *****************************************************************************/
 
+#ifndef DEF_LINKEDLISTS
+#define DEF_LINKEDLISTS
+
 #include <stdlib.h>
 #include <assert.h>
 #include "tree.h"
@@ -27,3 +30,5 @@ void ll_clean(LinkedList* lst);
 void ll_insert_next(LinkedList* lst, LinkedListVal val);
 
 void ll_delete_next(LinkedList* lst);
+
+#endif//DEF_LINKEDLISTS

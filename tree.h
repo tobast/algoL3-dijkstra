@@ -8,6 +8,9 @@
  * Implements a tree of TreeNodes
  *****************************************************************************/
 
+#ifndef DEF_TREE
+#define DEF_TREE
+
 #include "genericStruct.h"
 
 typedef struct Tree {
@@ -30,3 +33,5 @@ void tr_addChild(Tree* node, Tree* subNode);
  * @return the new root.
  **/
 Tree* tr_merge(Tree* tr1, Tree* tr2);
+
+#endif//DEF_TREE

@@ -8,6 +8,9 @@
  * Implements a fibonaccci heap
  *****************************************************************************/
 
+#ifndef DEF_FIBOHEAP
+#define DEF_FIBOHEAP
+
 #include "linkedLists.h"
 #include "genericStruct.h"
 
@@ -37,3 +40,4 @@ TreeNode fh_extractMin(FiboHeap* fh);
  **/
 void fh_insert(FiboHeap* fh, TreeNode nVal);
 
+#endif//DEF_FIBOHEAP

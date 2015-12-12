@@ -8,6 +8,9 @@
  * implement extendable lists
  *****************************************************************************/
 
+#ifndef DEF_EXTENDLIST
+#define DEF_EXTENDLIST
+
 #include <stdlib.h>
 #include <assert.h>
 
@@ -29,4 +32,4 @@ int el_get(ExtendList* lst, int rank);
 
 int el_size(ExtendList* lst);
 
-
+#endif//DEF_EXTENDLIST
