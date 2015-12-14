@@ -1,5 +1,5 @@
 CC=gcc
-CCFLAGS=-Wall -Werror -std=c99 -Wno-unused-result -O2
+CCFLAGS=-Wall -Wextra -std=c99 -Wno-unused-result -O2
 CCLIBS=
 TARGET=dijkstra
 OBJS=genericStruct.o extendLists.o tree.o linkedLists.o fiboHeap.o main.o
