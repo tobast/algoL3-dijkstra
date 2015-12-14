@@ -10,9 +10,10 @@
 
 #include "fiboHeap.h"
 
-FiboHeap fh_create(TreeNode initialVal) {
+FiboHeap fh_create() {
 	FiboHeap fh;
-	fh.trees = ll_create(tr_create(initialVal));
+	fh.trees = NULL;
+	fh.totElem = 0;
 	return fh;
 }
 
@@ -44,12 +45,28 @@ TreeNode fh_extractMin(FiboHeap* fh) {
 	// Now the list does not contain the minimum anymore, but contains all its
 	// children as new roots.
 
-	// TODO rearrange tree
+	// According to Introduction to algorithms, D(n) <= ln(n)
+	LinkedList* elemOfDegree =
+		(LinkedList*) calloc((int)log(fh->totElem)+1, sizeof(LinkedList*));
+
+	elemOfDegree[fh->trees->val.subtreeSize] = fh->trees;
+	for(LinkedList* it=fh->trees->next; it != fh->trees; it = it->next) {
+		int degr = it->val.subtreeSize;
+		if(elemOfDegree[degr] != NULL) {
+			Tree* nTree = tr_merge(elemOfDegree[degr]->val, it->val);
+			//TODO
+		}
+		else
+			elemOfDegree[degr] = it;
+	}
+
+	(fh->totElem)--;
 
 	return out;
 }
 
 void fh_insert(FiboHeap* fh, TreeNode nVal) {
+	(fh->totElem)++;
 	fh->trees = ll_insert_next(fh->trees, tr_create(nVal));
 	if(nVal.weight < fh->trees->val->val.weight)
 		fh->trees = fh->trees->next;

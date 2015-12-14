@@ -11,19 +11,19 @@
 #ifndef DEF_FIBOHEAP
 #define DEF_FIBOHEAP
 
+#include <math.c> // ln
 #include "linkedLists.h"
 #include "genericStruct.h"
 
 typedef struct FiboHeap {
 	LinkedList* trees; // Pointing to the minimal element.
-	// We'll maybe want to store a few more things later, so keep a structure.
+	int totElem;
 } FiboHeap;
 
 /**
- * Creates a fibonacci heap (allocates memory, ...) with the given initial
- * element. (The way the structure is made doesn't allow empty fibonacci heaps)
+ * Creates a new empty fibonacci heap.
  **/
-FiboHeap fh_create(TreeNode initialVal);
+FiboHeap fh_create();
 
 /**
  * Deallocates all the allocated memory.
