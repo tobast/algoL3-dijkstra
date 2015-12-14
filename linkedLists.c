@@ -20,30 +20,43 @@ LinkedList* ll_create(LinkedListVal val){
 }
 
 void ll_clean(LinkedList* lst){
+	if(lst == NULL)
+		return;
 	while (lst->next != lst) {
-		tr_clean(lst->next->child);
-		tr_clean(lst->next->sibling); // supposed to be NULL
+		tr_clean(lst->next->val->child);
+		tr_clean(lst->next->val->sibling); // supposed to be NULL
 		ll_delete_next(lst);
 	}
 	free(lst);
 }
 
-void ll_insert_next(LinkedList* lst, LinkedListVal val){
+LinkedList* ll_insert_next(LinkedList* lst, LinkedListVal val){
+	if(lst == NULL)
+		return ll_create(val);
+
 	LinkedList* newlst = (LinkedList*)malloc(sizeof(LinkedList));
+
 	newlst->next = lst->next;
 	newlst->prev = lst;
 	lst->next->prev = newlst;
 	lst->next = newlst;
+	return lst;
 }
 
-void ll_delete_next(LinkedList* lst){
-	if(lst->next == lst) // The list contains a single element
-		assert(0);
+LinkedList* ll_delete_next(LinkedList* lst){
+	if(lst == NULL)
+		assert(0); // The user deleted a non-existing element.
+	else if(lst->next == lst) { // The list contains a single element
+		free(lst);
+		return NULL;
+	}
+
 	LinkedList* delLst = lst->next;
 	lst->next = delLst->next;
 	delLst->next->prev = lst;
 	
-	tr_cleanSingle(delLst.val); // Necessary for fiboHeap to work
+	tr_cleanSingle(delLst->val); // Necessary for fiboHeap to work
 	free(delLst);
+	return lst;
 }
 

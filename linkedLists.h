@@ -27,8 +27,8 @@ LinkedList* ll_create(LinkedListVal val);
 
 void ll_clean(LinkedList* lst);
 
-void ll_insert_next(LinkedList* lst, LinkedListVal val);
+LinkedList* ll_insert_next(LinkedList* lst, LinkedListVal val);
 
-void ll_delete_next(LinkedList* lst);
+LinkedList* ll_delete_next(LinkedList* lst);
 
 #endif//DEF_LINKEDLISTS

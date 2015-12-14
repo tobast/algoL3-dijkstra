@@ -11,6 +11,7 @@
 #ifndef DEF_TREE
 #define DEF_TREE
 
+#include <stdlib.h>
 #include "genericStruct.h"
 
 typedef struct Tree {
@@ -23,7 +24,7 @@ typedef struct Tree {
 /**
  * Creates a tree node without any children nor siblings.
  **/
-Tree tr_create(TreeNode val);
+Tree* tr_create(TreeNode val);
 
 /**
  * Deallocates all the allocated memory recursively

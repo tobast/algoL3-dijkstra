@@ -10,12 +10,12 @@
 
 #include "tree.h"
 
-Tree tr_create(TreeNode val) {
-	Tree tr;
-	tr.child = NULL;
-	tr.sibling = NULL;
-	tr.subtreeSize = 0;
-	tr.val = val;
+Tree* tr_create(TreeNode val) {
+	Tree* tr = malloc(sizeof(Tree));
+	tr->child = NULL;
+	tr->sibling = NULL;
+	tr->subtreeSize = 0;
+	tr->val = val;
 	return tr;
 }
 
