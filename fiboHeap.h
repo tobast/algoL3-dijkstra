@@ -11,7 +11,6 @@
 #ifndef DEF_FIBOHEAP
 #define DEF_FIBOHEAP
 
-#include <math.c> // ln
 #include "linkedLists.h"
 #include "genericStruct.h"
 

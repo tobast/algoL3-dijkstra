@@ -10,6 +10,16 @@
 
 #include "fiboHeap.h"
 
+/// Useful to fh_extractMin. I don't want to link against math.
+int intlog2(int x) {
+	int out=1;
+	while(x > 0) {
+		out++;
+		x>>=1;
+	}
+	return out;
+}
+
 FiboHeap fh_create() {
 	FiboHeap fh;
 	fh.trees = NULL;
@@ -46,14 +56,15 @@ TreeNode fh_extractMin(FiboHeap* fh) {
 	// children as new roots.
 
 	// According to Introduction to algorithms, D(n) <= ln(n)
-	LinkedList* elemOfDegree =
-		(LinkedList*) calloc((int)log(fh->totElem)+1, sizeof(LinkedList*));
+	LinkedList** elemOfDegree =
+		(LinkedList**) calloc(2 * intlog2(fh->totElem) + 1,
+			sizeof(LinkedList*));
 
-	elemOfDegree[fh->trees->val.subtreeSize] = fh->trees;
+	elemOfDegree[fh->trees->val->subtreeSize] = fh->trees;
 	for(LinkedList* it=fh->trees->next; it != fh->trees; it = it->next) {
-		int degr = it->val.subtreeSize;
+		int degr = it->val->subtreeSize;
 		if(elemOfDegree[degr] != NULL) {
-			Tree* nTree = tr_merge(elemOfDegree[degr]->val, it->val);
+			//Tree* nTree = tr_merge(elemOfDegree[degr]->val, it->val);
 			//TODO
 		}
 		else
