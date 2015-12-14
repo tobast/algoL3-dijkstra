@@ -20,7 +20,11 @@ Tree tr_create(TreeNode val) {
 }
 
 void tr_clean(Tree* node) {
-	//TODO
+	if(node == NULL)
+		return;
+	tr_clean(node->sibling);
+	tr_clean(node->child);
+	free(node);
 }
 
 void tr_addChild(Tree* node, Tree* subNode) {
