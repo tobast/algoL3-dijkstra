@@ -24,6 +24,12 @@ void tr_clean(Tree* node) {
 		return;
 	tr_clean(node->sibling);
 	tr_clean(node->child);
+	tr_cleanSingle(node);
+}
+
+void tr_cleanSingle(Tree* node) {
+	if(node == NULL)
+		return;
 	free(node);
 }
 

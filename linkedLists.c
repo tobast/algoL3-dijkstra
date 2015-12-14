@@ -20,8 +20,11 @@ LinkedList* ll_create(LinkedListVal val){
 }
 
 void ll_clean(LinkedList* lst){
-	while (lst->next != lst)
+	while (lst->next != lst) {
+		tr_clean(lst->next->child);
+		tr_clean(lst->next->sibling); // supposed to be NULL
 		ll_delete_next(lst);
+	}
 	free(lst);
 }
 
@@ -40,7 +43,7 @@ void ll_delete_next(LinkedList* lst){
 	lst->next = delLst->next;
 	delLst->next->prev = lst;
 	
-	tr_clean(delLst.val);
+	tr_cleanSingle(delLst.val); // Necessary for fiboHeap to work
 	free(delLst);
 }
 
