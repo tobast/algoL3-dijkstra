@@ -60,16 +60,35 @@ TreeNode fh_extractMin(FiboHeap* fh) {
 		(LinkedList**) calloc(2 * intlog2(fh->totElem) + 1,
 			sizeof(LinkedList*));
 
+	// Iterates from fh->trees->next to fh->trees INCLUSIVE
+	// Keeps a valid fh->trees pointer
 	elemOfDegree[fh->trees->val->subtreeSize] = fh->trees;
 	for(LinkedList* it=fh->trees->next; it != fh->trees; it = it->next) {
 		int degr = it->val->subtreeSize;
+		short moveHead = false;
 		if(elemOfDegree[degr] != NULL) {
-			//Tree* nTree = tr_merge(elemOfDegree[degr]->val, it->val);
-			//TODO
+			if(elemOfDegree[degr] == fh->trees) {
+				// If we're gonna delete fh->trees->next in this operation
+				if(it == fh->trees->next)
+					moveHead = true;
+				else
+					fh->trees = fh->trees->next;
+			}
+			Tree* nTree = tr_merge(elemOfDegree[degr]->val, it->val);
+			ll_delete_next(elemOfDegree[degr]->prev);
+			elemOfDegree[degr] = NULL;
+			it = it->prev;
+			it = ll_delete_next(it);
+			it = ll_insert_next(it, nTree);
+			// fh->trees->next was deleted, the rightful head is nTree
+			if(moveHead)
+				fh->trees = it->next;
 		}
 		else
 			elemOfDegree[degr] = it;
 	}
+
+	free(elemOfDegree);
 
 	(fh->totElem)--;
 
