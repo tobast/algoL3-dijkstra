@@ -11,6 +11,9 @@
 #ifndef DEF_GENERICSTRUCT
 #define DEF_GENERICSTRUCT
 
+#define false	0 // Yes, I like C++.
+#define true	1
+
 typedef struct TreeNode {
 	int weight;
 	int graphNode;
