@@ -16,9 +16,11 @@ Graph g_create(int size){
 	g.nbVertices = size;
 	g.adj = (ExtendList*)malloc(size*(sizeof(ExtendList)));
 	g.weights = (ExtendList*)malloc(size*(sizeof(ExtendList)));
+	g.indAdj = (ExtendList*)malloc(size*(sizeof(ExtendList)));
 	for(int i = 0 ; i < size ; i++){
 		g.adj[i] = el_create(0);
 		g.weights[i] = el_create(0);
+		g.indAdj[i] = el_create(0);
 	}
 	return g;
 }

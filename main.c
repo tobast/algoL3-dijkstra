@@ -22,7 +22,7 @@ Arguments args(int argc, char** argv) {
 	out.useNaiveDijkstra = false;
 
 	for(int par=1; par < argc; par++) {
-		if(strcmp(argv[par], "--naive"))
+		if(strcmp(argv[par], "--naive") == 0)
 			out.useNaiveDijkstra = true;
 	}
 	return out;
