@@ -15,7 +15,7 @@
 #include "graph.h"
 #include "genericStruct.h"
 #include "naiveDijkstra.h"
-//#include "dijkstra.h" //TODO
+#include "dijkstra.h"
 
 Arguments args(int argc, char** argv) {
 	Arguments out;
@@ -41,8 +41,7 @@ int main(int argc, char** argv) {
 	int nbVert, nbEdges;
 	scanf("%d %d", &nbVert, &nbEdges);
 	Graph graph = g_create(nbVert);
-	graph.nbEdges = nbEdges;
-	for(int edge=0; edge < graph.nbEdges; edge++) {
+	for(int edge=0; edge < nbEdges; edge++) {
 		int from,to,weight;
 		scanf("%d %d %d", &from, &to, &weight);
 		g_addEdge(&graph, from, to, weight);
@@ -54,6 +53,7 @@ int main(int argc, char** argv) {
 
 	int* distances = (int*) malloc(sizeof(int)*nbVert);
 	int* ancestors = (int*) malloc(sizeof(int)*nbVert);
+
 	for(int sourceId=0; sourceId < nbSources; sourceId++) {
 		int sourceVert;
 		scanf("%d", &sourceVert);
@@ -63,8 +63,7 @@ int main(int argc, char** argv) {
 			naiveDijkstra(&graph, sourceVert, distances, ancestors);
 		}
 		else { // Here comes the real stuff.
-			//TODO
-			assert(false);
+			dijkstra(&graph, sourceVert, distances, ancestors);
 		}
 
 		// Output path
