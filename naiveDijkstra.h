@@ -17,4 +17,10 @@ typedef struct Triple {
 	int w;
 } Triple;
 
-void naiveDijkstra(Graph* g, int s, int* res);
+/**
+ * Computes naively the distances from s to every vertice in g, and stores
+ * it in res, while storing each node's ancestor in the path in ancestors.
+ * @param res: array of size at least g->nbVertices. Needn't be initialized.
+ * @param ancestors: same.
+ **/
+void naiveDijkstra(Graph* g, int s, int* res, int* ancestors);
