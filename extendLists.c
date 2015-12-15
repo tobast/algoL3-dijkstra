@@ -37,7 +37,7 @@ void el_push_back(ExtendList* lst, int val){
 
 void el_pop_back(ExtendList* lst){
 	if(lst->curLength == 0) // trying to pop from an empty list
-		assert(0);
+		assert("Empty list: can't pop" == 0);
 	if ((lst->curLength) < (lst->availLength)/4){
 		int* lstAux = lst->list;
 		lst->list = (int*)malloc(sizeof(int)*((lst->availLength)/2));
