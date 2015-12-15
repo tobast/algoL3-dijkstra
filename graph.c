@@ -29,7 +29,7 @@ int g_create_bound(int size) {
 }
 
 void g_addEdge(Graph* g, int a, int b, int w){
-	(g->nbVertices)++;
+	(g->nbEdges)++;
 	el_push_back(&(g->adj[a]), b);
 	el_push_back(&(g->weights[a]), w);
 	el_push_back(&(g->indAdj[a]),b);
