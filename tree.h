@@ -25,16 +25,19 @@ typedef struct Tree {
  * Creates a tree node without any children nor siblings.
  **/
 Tree* tr_create(TreeNode val);
+int tr_create_bound(TreeNode val);
 
 /**
  * Deallocates all the allocated memory recursively
  **/
 void tr_clean(Tree* node);
+int tr_clean_bound(Tree* node);
 
 /**
  * Deallocates the allocated memory of THIS node, leaving its children
  **/
 void tr_cleanSingle(Tree* node);
+int tr_cleanSingle_bound(Tree* node);
 
 /**
  * Adds subNode as the first child of node, and its previous child as the
@@ -42,6 +45,7 @@ void tr_cleanSingle(Tree* node);
  * WARNING! The siblings of subNode are lost in the process!
  **/
 void tr_addChild(Tree* node, Tree* subNode);
+int tr_addChild_bound(Tree* node, Tree* subNode);
 
 /**
  * Adds tr1 as a child of tr2, or the other way, so that the output tree is
@@ -49,5 +53,6 @@ void tr_addChild(Tree* node, Tree* subNode);
  * @return the new root.
  **/
 Tree* tr_merge(Tree* tr1, Tree* tr2);
+int tr_merge_bound(Tree* tr1, Tree* tr2);
 
 #endif//DEF_TREE

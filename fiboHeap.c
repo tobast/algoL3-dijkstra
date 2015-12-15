@@ -51,7 +51,7 @@ void fh_clean(FiboHeap* fh) {
 	ll_clean(fh->trees);
 }
 
-int fh_getMin_bound(FiboHeap* fh) {
+int fh_getMin_bound(FiboHeap* UNUSED(fh)) {
 	return 1;
 }
 TreeNode fh_getMin(FiboHeap* fh) {
@@ -82,8 +82,8 @@ int fh_extractMin_bound(FiboHeap* fh) {
 		tr_cleanSingle_bound(NULL) +
 		ll_delete_next_bound(NULL) +
 		(2*intlog2(fh->totElem)+1)*sizeof(LinkedList*) +
-		nbRoots * (tr_delete_next_bound(NULL,NULL)*2 +
-			tr_insert_next_bound(NULL,NULL) +
+		nbRoots * (ll_delete_next_bound(NULL)*2 +
+			ll_insert_next_bound(NULL,NULL) +
 			tr_merge_bound(NULL,NULL)
 			) +
 		intlog2(fh->totElem - 1);
@@ -159,7 +159,7 @@ TreeNode fh_extractMin(FiboHeap* fh) {
 	return out;
 }
 
-int fh_insert_bound(FiboHeap* fh, TreeNode nVal) {
+int fh_insert_bound(FiboHeap* UNUSED(fh), TreeNode UNUSED(nVal)) {
 	return (1 + ll_insert_next_bound(NULL, NULL));
 }
 void fh_insert(FiboHeap* fh, TreeNode nVal) {

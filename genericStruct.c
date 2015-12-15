@@ -16,4 +16,7 @@ TreeNode makeTreeNode(int weight, int graphNode) {
 	t.graphNode = graphNode;
 	return t;
 }
+int makeTreeNode_bound(int UNUSED(a),int UNUSED(b)) {
+	return 1;
+}
 
