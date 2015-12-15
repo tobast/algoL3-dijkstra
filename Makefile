@@ -2,7 +2,8 @@ CC=gcc
 CCFLAGS=-Wall -Wextra -std=c99 -Wno-unused-result -O2
 CCLIBS=
 TARGET=dijkstra
-OBJS=genericStruct.o extendLists.o tree.o linkedLists.o fiboHeap.o main.o
+OBJS=genericStruct.o extendLists.o tree.o linkedLists.o fiboHeap.o main.o \
+	graph.o
 
 #all: $(TARGET)
 
