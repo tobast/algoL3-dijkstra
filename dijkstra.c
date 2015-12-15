@@ -32,7 +32,8 @@ void dijkstra(Graph* g, int s, int* res, int* ancestors){
 			seen[n.graphNode] = 1;
 			for(int i = 0 ; i < (g->adj[n.graphNode]).curLength ; i++){
 				int dist = n.weight + (g->weights[n.graphNode]).list[i];
-				fh_insert(&queue, makeTreeNode(dist, n.graphNode, n.ancestor));
+				fh_insert(&queue, makeTreeNode(dist, 
+					(g->adj[n.graphNode]).list[i], n.graphNode));
 			}
 		}
 	}
