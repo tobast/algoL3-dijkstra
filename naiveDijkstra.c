@@ -33,6 +33,9 @@ Triple naiveMin(ExtendList* origin, ExtendList* end, ExtendList* dist){
 		(origin->list)[i-1] = (origin->list)[i];
 		(end->list)[i-1] = (end->list)[i];
 	}
+	el_pop_back(dist);
+	el_pop_back(origin);
+	el_pop_back(end);
 	return t ;
 }
 int naiveMin_bound(ExtendList* UNUSED(o), ExtendList* e, ExtendList* UNUSED(d)){
@@ -79,3 +82,4 @@ int naiveDijkstra_bound(Graph* g, int s, int* UNUSED(res)){
 		+ (g->nbEdges)*(1 + (g->nbEdges)*10 + tripleCreate_bound(0,0,0))
 		+ (g->nbEdges)*(2 + 3*el_push_back_bound_amz(NULL,0));
 }
+
