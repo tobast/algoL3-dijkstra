@@ -38,11 +38,13 @@ LinkedList* ll_insert_next(LinkedList* lst, LinkedListVal val){
 
 	newlst->next = lst->next;
 	newlst->prev = lst;
+	newlst->val = val;
 	lst->next->prev = newlst;
 	lst->next = newlst;
 	return lst;
 }
 
+//WARNING! Doesn't free() the tree anymore
 LinkedList* ll_delete_next(LinkedList* lst){
 	if(lst == NULL)
 		assert(0); // The user deleted a non-existing element.
@@ -55,7 +57,7 @@ LinkedList* ll_delete_next(LinkedList* lst){
 	lst->next = delLst->next;
 	delLst->next->prev = lst;
 	
-	tr_cleanSingle(delLst->val); // Necessary for fiboHeap to work
+//	tr_cleanSingle(delLst->val); // Necessary for fiboHeap to work
 	free(delLst);
 	return lst;
 }

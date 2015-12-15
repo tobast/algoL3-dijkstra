@@ -32,12 +32,12 @@ void fh_clean(FiboHeap* fh) {
 }
 
 TreeNode fh_getMin(FiboHeap* fh) {
+	assert(fh->trees != NULL);
 	return fh->trees->val->val;
 }
 
 TreeNode fh_extractMin(FiboHeap* fh) {
-	if(fh->trees == NULL) // empty heap
-		assert(0);
+	assert(fh->trees != NULL);
 	
 	LinkedList* prevMin = fh->trees;
 	TreeNode out = prevMin->val->val;
@@ -49,8 +49,12 @@ TreeNode fh_extractMin(FiboHeap* fh) {
 		child = next;
 	}
 
+	tr_cleanSingle(prevMin->val);
 	fh->trees = prevMin->prev;
 	fh->trees = ll_delete_next(fh->trees);
+
+	if(fh->trees == NULL) // The list is now empty
+		return out;
 
 	// Now the list does not contain the minimum anymore, but contains all its
 	// children as new roots.
