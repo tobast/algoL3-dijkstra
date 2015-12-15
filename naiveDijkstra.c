@@ -17,6 +17,9 @@ Triple tripleCreate(int a, int b, int w){
 	t.w = w;
 	return t;
 }
+int tripleCreate_bound(int UNUSED(a), int UNUSED(b), int UNUSED(c)){
+	return 3;
+}
 
 Triple naiveMin(ExtendList* origin, ExtendList* end, ExtendList* dist){
 	int indMin = 0;
@@ -32,8 +35,11 @@ Triple naiveMin(ExtendList* origin, ExtendList* end, ExtendList* dist){
 	}
 	return t ;
 }
+int naiveMin_bound(ExtendList* UNUSED(o), ExtendList* e, ExtendList* UNUSED(d)){
+	return 1 + (e->curLength)*10 + tripleCreate_bound(0, 0, 0);
+}
 
-void naiveDijkstra(Graph* g, int s, int* res){
+void naiveDijkstra(Graph* g, int s, int* res, int* ancestors){
 	if(s >= g->nbVertices)
 		assert("The source isn't in the graph." == 0);
 	int nbSeen;
@@ -42,9 +48,12 @@ void naiveDijkstra(Graph* g, int s, int* res){
 	ExtendList end = el_create(0);
 	ExtendList weights = el_create(0);
 	int* seen = (int*)malloc((g->nbVertices)*sizeof(int));
-	for(int i = 0 ; i < g->nbVertices ; i++)
+	for(int i = 0 ; i < g->nbVertices ; i++){
 		res[i] = (-1);
-	seen[s] = 1;
+		ancestors[i] = (-1);
+	}
+	res[s] = 0;
+	ancestors[s] = 0;
 	for(int i = 0 ; i < (g->adj[s]).curLength ; i++){
 		el_push_back(&origin,s);
 		el_push_back(&end, (g->adj[s]).list[i]);
@@ -54,6 +63,7 @@ void naiveDijkstra(Graph* g, int s, int* res){
 		Triple t = naiveMin(&origin, &end, &weights);
 		if(seen[t.b] == 0){
 			res[t.b] = t.w;
+			ancestors[t.b] = t.a;
 			seen[t.b] = 1;
 			nbSeen++;
 			for(int i = 0 ; i < (g->adj[t.b]).curLength ; i++) {
@@ -66,4 +76,9 @@ void naiveDijkstra(Graph* g, int s, int* res){
 	}
 	free(seen);
 }
-	
+int naiveDijkstra_bound(Graph* g, int s, int* UNUSED(res)){
+	return 5 + 3*el_create_bound(0) + (g->nbVertices)*4 
+		+ ((g->adj[s]).curLength)*(2+3*el_push_back_bound_amz(NULL, 0))
+		+ (g->nbEdges)*(1 + (g->nbEdges)*10 + tripleCreate_bound(0,0,0))
+		+ (g->nbEdges)*(2 + 3*el_push_back_bound_amz(NULL,0));
+}
