@@ -22,6 +22,12 @@ typedef struct Graph {
 	ExtendList* indAdj;
 } Graph;
 
+typedef struct Triple {
+	int a;
+	int b;
+	int w;
+} Triple;
+
 Graph g_create(int size);
 
 void g_addEdge(Graph* g, int a, int b, int w);
@@ -31,8 +37,6 @@ void g_clean(Graph* g);
 int g_size(Graph* g);
 
 int g_testConnexity(Graph* g);
-
-
 
 #endif//DEF_GRAPH
 
