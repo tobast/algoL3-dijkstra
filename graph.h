@@ -23,12 +23,6 @@ typedef struct Graph {
 	ExtendList* indAdj;
 } Graph;
 
-typedef struct Triple {
-	int a;
-	int b;
-	int w;
-} Triple;
-
 Graph g_create(int size);
 int g_create_bound(int size);
 
