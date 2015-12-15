@@ -46,7 +46,7 @@ int el_push_back_bound(ExtendList* lst, int UNUSED(val)) {
 	return 1;
 }
 int el_push_back_bound_amz(ExtendList* UNUSED(lst), int UNUSED(val)) {
-	return 2;
+	return 2; //amortized
 }
 
 void el_pop_back(ExtendList* lst){
