@@ -10,13 +10,14 @@
 
 #include "genericStruct.h"
 
-TreeNode makeTreeNode(int weight, int graphNode) {
+TreeNode makeTreeNode(int weight, int graphNode, int ancestor) {
 	TreeNode t;
 	t.weight = weight;
 	t.graphNode = graphNode;
+	t.ancestor = ancestor;
 	return t;
 }
-int makeTreeNode_bound(int UNUSED(a),int UNUSED(b)) {
-	return 1;
+int makeTreeNode_bound(int UNUSED(a),int UNUSED(b),int UNUSED(c)) {
+	return 4;
 }
 

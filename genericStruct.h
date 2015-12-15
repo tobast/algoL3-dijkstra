@@ -23,13 +23,14 @@
 typedef struct TreeNode {
 	int weight;
 	int graphNode;
+	int ancestor;
 } TreeNode; 
 
 typedef struct Arguments {
 	short useNaiveDijkstra;
 } Arguments;
 
-TreeNode makeTreeNode(int weight, int graphNode);
-int makeTreeNode_bound(int, int);
+TreeNode makeTreeNode(int weight, int graphNode, int ancestor);
+int makeTreeNode_bound(int, int, int);
 
 #endif//DEF_GENERICSTRUCT
