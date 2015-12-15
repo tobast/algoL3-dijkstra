@@ -42,6 +42,7 @@ int main(void) {
 }
 *****************************************************************************/
 
+/*
 #include "extendLists.h"
 
 int main(void) {
@@ -75,6 +76,39 @@ int main(void) {
 		}
 	}
 	el_clean(&l);
+	return 0;
+}
+*************** TEST EXTENDLISTS ********************************************/
+
+
+#include "fiboHeap.h"
+#include "genericStruct.h"
+
+int main(void) {
+	FiboHeap fh = fh_create();
+	short running = true;
+	while(running) {
+		char act = getchar();
+		while(act == '\n') { act = getchar(); }
+
+		TreeNode val;
+
+		switch(act) {
+			case 'm':
+				val = fh_extractMin(&fh);
+				printf("Min: %d of weight %d\n", val.graphNode, val.weight);
+				break;
+			case 'i':
+				scanf("%d %d", &(val.graphNode), &(val.weight));
+				fh_insert(&fh, val);
+				val = fh_getMin(&fh);
+				printf("Min: %d of weight %d\n", val.graphNode, val.weight);
+				break;
+			case 'q':
+				running = false;
+				break;
+		}
+	}
 	return 0;
 }
 
