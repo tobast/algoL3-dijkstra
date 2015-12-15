@@ -92,6 +92,14 @@ TreeNode fh_extractMin(FiboHeap* fh) {
 
 	(fh->totElem)--;
 
+	// Now finds the minimum element
+	LinkedList* curMin = fh->trees;
+	for(LinkedList* it=fh->trees->next(); it != fh->trees; it->next) {
+		if(it->val->val->weight < curMin->val->val->weight)
+			curMin = it;
+	}
+	fh->trees = curMin;
+
 	return out;
 }
 
