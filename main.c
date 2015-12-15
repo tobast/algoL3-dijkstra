@@ -84,6 +84,24 @@ int main(void) {
 #include "fiboHeap.h"
 #include "genericStruct.h"
 
+void dfsPrint(Tree* cur, Tree* parent) {
+	if(parent == NULL)
+		printf("%d root\n", cur->val.graphNode);
+	else
+		printf("%d -> %d\n", parent->val.graphNode, cur->val.graphNode);
+
+	if(cur->sibling != NULL)
+		dfsPrint(cur->sibling, parent);
+	if(cur->child != NULL)
+		dfsPrint(cur->child, cur);
+}
+
+void fullPrint(FiboHeap* fh) {
+	dfsPrint(fh->trees->val, NULL);
+	for(LinkedList* it = fh->trees->next ; it != fh->trees; it=it->next)
+		dfsPrint(fh->trees->val, NULL); 
+}
+
 int main(void) {
 	FiboHeap fh = fh_create();
 	short running = true;
@@ -101,8 +119,12 @@ int main(void) {
 			case 'i':
 				scanf("%d %d", &(val.graphNode), &(val.weight));
 				fh_insert(&fh, val);
+			case 'c':
 				val = fh_getMin(&fh);
 				printf("Min: %d of weight %d\n", val.graphNode, val.weight);
+				break;
+			case 'f':
+				fullPrint(&fh);
 				break;
 			case 'q':
 				running = false;
