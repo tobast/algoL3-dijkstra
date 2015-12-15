@@ -18,6 +18,9 @@ Tree* tr_create(TreeNode val) {
 	tr->val = val;
 	return tr;
 }
+int tr_create_bound(TreeNode UNUSED(val)) {
+	return 6;
+}
 
 void tr_clean(Tree* node) {
 	if(node == NULL)
@@ -26,17 +29,28 @@ void tr_clean(Tree* node) {
 	tr_clean(node->child);
 	tr_cleanSingle(node);
 }
+int tr_clean_bound(Tree* node) {
+	return tr_clean_bound(node->sibling) +
+		tr_clean_bound(node->child) +
+		tr_cleanSingle_bound(node);
+}
 
 void tr_cleanSingle(Tree* node) {
 	if(node == NULL)
 		return;
 	free(node);
 }
+int tr_cleanSingle_bound(Tree* UNUSED(node)) {
+	return 1;
+}
 
 void tr_addChild(Tree* node, Tree* subNode) {
 	subNode->sibling = node->child;
 	node->child = subNode;
 	node->subtreeSize += subNode->subtreeSize;
+}
+int tr_addChild_bound(Tree* UNUSED(node), Tree* UNUSED(subNode)) {
+	return 3;
 }
 
 Tree* tr_merge(Tree* tr1, Tree* tr2) {
@@ -46,5 +60,8 @@ Tree* tr_merge(Tree* tr1, Tree* tr2) {
 	}
 	tr_addChild(tr2, tr1);
 	return tr2;
+}
+int tr_merge_bound(Tree* UNUSED(tr1), Tree* UNUSED(tr2)) {
+	return tr_addChild_bound(NULL, NULL) + 1;
 }
 
