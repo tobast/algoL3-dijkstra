@@ -42,8 +42,6 @@ int naiveMin_bound(ExtendList* UNUSED(o), ExtendList* e, ExtendList* UNUSED(d)){
 void naiveDijkstra(Graph* g, int s, int* res, int* ancestors){
 	if(s >= g->nbVertices)
 		assert("The source isn't in the graph." == 0);
-	int nbSeen;
-	nbSeen = 1;
 	ExtendList origin = el_create(0);
 	ExtendList end = el_create(0);
 	ExtendList weights = el_create(0);
@@ -59,13 +57,12 @@ void naiveDijkstra(Graph* g, int s, int* res, int* ancestors){
 		el_push_back(&end, (g->adj[s]).list[i]);
 		el_push_back(&weights, (g->weights[s]).list[i]);
 	}
-	while(nbSeen < g->nbVertices){
+	while(end.curLength != 0){
 		Triple t = naiveMin(&origin, &end, &weights);
 		if(seen[t.b] == 0){
 			res[t.b] = t.w;
 			ancestors[t.b] = t.a;
 			seen[t.b] = 1;
-			nbSeen++;
 			for(int i = 0 ; i < (g->adj[t.b]).curLength ; i++) {
 				int dist = t.w + (g->weights[t.b]).list[i];
 				el_push_back(&origin, t.b);
