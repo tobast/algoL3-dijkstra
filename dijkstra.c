@@ -14,7 +14,7 @@ void dijkstra(Graph* g, int s, int* res, int* ancestors){
 	if (s >= g->nbVertices)
 		assert("The source isn't in the graph." == 0);
 	FiboHeap queue = fh_create();
-	int* seen = (int*)malloc((g->nbVertices)*sizeof(int));
+	int* seen = (int*)calloc((g->nbVertices),sizeof(int));
 	for(int i = 0 ; i < g->nbVertices ; i++){
 		res[i] = -1;
 		ancestors[i] = -1;
