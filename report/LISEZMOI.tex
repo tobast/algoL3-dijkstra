@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[12p0t,a4paper]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage[french]{babel}
@@ -8,6 +8,17 @@
 \usepackage{amssymb}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 \usepackage{my_listings}
+\usepackage{siunitx}
+\usepackage{tikz} % To generate the plot from csv
+\usepackage{pgfplots}
+
+\pgfplotsset{compat=newest} % Allows to place the legend below plot
+\usepgfplotslibrary{units} % Allows to enter the units nicely
+
+\sisetup{
+  round-mode          = places,
+  round-precision     = 2,
+}
 
 \author{Théophile \textsc{Bastian} et Noémie \textsc{Cartier}}
 \title{Rapport de projet d'algorithmique -- Algorithme de \textsc{Dijkstra}}
@@ -21,9 +32,9 @@
 
 \subsection{Compilation}
 
-Pour compiler, il faut se placer dans le dossier racine et exécuter la commande \texttt{make}~; pour réinitialiser le dossier, et supprimer les fichiers créés par \texttt{make}, on peut exécuter la commande \texttt{make clean}.
+Pour compiler, il faut se placer dans le dossier racine et exécuter la commande \lstbash{make}~; pour réinitialiser le dossier, et supprimer les fichiers créés par \lstbash{make}, on peut exécuter la commande \lstbash{make clean}.
 
-L'exécutable produit s'appelle \texttt{dijkstra}.
+L'exécutable produit s'appelle \lstbash{dijkstra}.
 
 \subsection{Formatage de l'entrée et options}
 
@@ -47,10 +58,11 @@ $./dijkstra
  1 0  
 \end{lstlisting}
 
-Les options qui peuvent être passées à \texttt{./dijkstra} sont~:
+Les options qui peuvent être passées à \lstbash{./dijkstra} sont~:
 \begin{itemize}
 \item \lstbash{--naive}~: applique l'algorithme de Dijkstra avec une structure de file de priorité naïve et non optimisée~;
-\item \lstbash{--dists-only}~: affiche uniquement les distances entre la source et les sommets, sans indiquer le chemin à parcourir.
+\item \lstbash{--dists-only}~: affiche uniquement les distances entre la source et les sommets, sans indiquer le chemin à parcourir~;
+\item \lstbash{--print-bound}~: affiche \lstbash{bound: <n>}, où n est le nombre d'opérations effectuées supposées.
 \end{itemize}
 
 \subsection{Formatage de sortie}
@@ -62,5 +74,79 @@ Les sorties se présentent sous la forme d'une suite de lignes, sous uns des deu
 \end{lstlisting}
 
 \subsection{Outils}
+
+Les outils fournis avec l'algorithme, ne faisant à strictement parler partie du projet, sont les suivants~:
+
+\begin{itemize}
+\item \lstbash{checker/checker} prend exactement la même entrée et affiche exactement la même sortie que \lstbash{./dijkstra --dists-only} (dans le cas où celui-ci fonctionne correctement). Il s'agit d'une implémentation C++ utilisant les files de priorité \lstbash{stl}, supposée correcte (ou du moins ne présentant pas les mêmes erreurs...)~;
+\item \lstbash{./genRandGraph.sh <prefix>} génère un graphe aléatoire à l'aide de \lstbash{genRandGraph.py} (ce dernier contenant des constantes modifiables au début). Le graphe est présenté sous la forme de deux fichiers~: \lstbash{<prefix>.png} est une représentation graphique du graphe, tandis que \lstbash{<prefix>.in} est un fichier d'entrée de \lstbash{dijkstra} ayant pour unique source \lstbash{0}.
+
+\textbf{Attention~!} Pour générer des graphes trop gros (plus d'une centaine de nœuds), ou simplement pour effectuer beaucoup de tests, il peut être utile de passer \lstbash{--no-dot} comme \emph{première} option à la commande afin d'éviter de générer l'image, ce qui ralentit considérablement l'exécution~;
+\item \lstbash{./randChecking.sh <n>} exécute n tests aléatoires successivement, durant lesquels il compare les résultats de \lstbash{./dijkstra}, de \lstbash{./dijkstra --naive} et de \lstbash{checker/checker}. Le programme stocke les incohérences dans le dossier \lstbash{tests}.
+\end{itemize}
+
+\section{Détails d'implémentation}
+
+\subsection{Fichiers source}
+
+Les différents fichiers sources ont les rôles suivants~:
+
+\begin{itemize}
+\item \lstbash{genericStruct.c,h} définit un certain nombre de structures, macro\ldots{} utilisées par la suite~;
+
+\item \lstbash{extendLists.c,h} définit une structure de tableaux d'entiers redimensionnables, proche des \lstbash{std::vector} en C++~;
+
+\item \lstbash{tree.c,h} définit une structure d'arbre utilisée dans les tas de Fibonacci, basée sur des pointeurs \lstbash{child} et \lstbash{sibling}~;
+
+\item \lstbash{linkedList.c,h} définit des listes doublement chaînées circulaires de pointeurs sur des \lstbash{Tree}~;
+
+\item \lstbash{fiboHeap.c,h} définit la structure des tas de Fibonacci à partir des structures précédentes~;
+
+\item \lstbash{graph.c,h} définit la structure des graphes à partir de listes d'adjacence basées sur \lstbash{ExtendList}~;
+
+\item \lstbash{naiveDijkstra.c,h} implémente une version naive de l'algorithme de Dikstra à partir de files de priorité telles que décrites dans le sujet, basées sur la structure \lstbash{ExtendList}~;
+
+\item \lstbash{dijkstra.c,h} implémente une version plus efficace de l'algorithme de Dijkstra à partir de files de priorité basées sur la structure des tas de Fibonacci.
+\end{itemize}
+
+\subsection{Tests}
+
+Pour confirmer la correction de nos algorithmes, nous avons passé la commande
+
+\begin{lstlisting}[language=bash]
+./randChecking.sh 10000
+\end{lstlisting}
+
+sur des graphes de nombre de sommets 1000, de degré sortant des sommets compris entre 0 et 20 et d'arêtes de poids inférieur à 100 (et parfois nul).
+
+Comme nos trois implémentations, qui sont a priori suffisamment différentes pour ne pas faire les mêmes erreurs, donnent des résultats cohérents, nous estimons que nos implémentations sont correctes.
+
+De plus, nous avons utilisé \lstbash{valgrind} pour vérifier l'absence de fuites de mémoire dans notre programme, et ce avec succès.
+
+\section{Performances}
+
+
+\begin{figure}[h!]
+  \begin{center}
+    \begin{tikzpicture}
+      \begin{axis}[
+          width=\linewidth, % Scale the plot to \linewidth
+          grid=major, % Display a grid
+          grid style={dashed,gray!30}, % Set the style
+          xlabel=Nombre de sommets, % Set the labels
+          ylabel=Temps d'exécution,
+          x unit=, % Set the respective units
+          y unit=\si{\second},
+          legend style={at={(0.5,-0.2)},anchor=north}, % Put the legend below the plot
+          x tick label style={rotate=90,anchor=east} % Display labels sideways
+        ]
+        \addplot table[x=column 1,y=column 2,col sep=comma] {table.csv};
+        \addplot  
+        \legend{Plot}
+      \end{axis}
+    \end{tikzpicture}
+    \caption{My first autogenerated plot.}
+  \end{center}
+\end{figure}
 
 \end{document}
