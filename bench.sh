@@ -5,7 +5,7 @@ mkdir -p "benchFiles/"
 echo -e "nbVert\tnaive\topti"
 
 for nbVert in `seq 10000 1000 100000`; do
-	if ! [ -f "benchFiles/${nbVert}.in" ]; then
+	if [ ! -f "benchFiles/${nbVert}.in" ]; then
 		python3 ./genRandGraph.py "$nbVert" 2>/dev/null > benchFiles/$nbVert.in
 	fi
 	/usr/bin/time -f "%e" ./dijkstra < benchs/$nbVert.in \
