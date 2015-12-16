@@ -83,6 +83,8 @@ Les outils fournis avec l'algorithme, ne faisant à strictement parler partie du
 
 \textbf{Attention~!} Pour générer des graphes trop gros (plus d'une centaine de nœuds), ou simplement pour effectuer beaucoup de tests, il peut être utile de passer \lstbash{--no-dot} comme \emph{première} option à la commande afin d'éviter de générer l'image, ce qui ralentit considérablement l'exécution~;
 \item \lstbash{./randChecking.sh <n>} exécute n tests aléatoires successivement, durant lesquels il compare les résultats de \lstbash{./dijkstra}, de \lstbash{./dijkstra --naive} et de \lstbash{checker/checker}. Le programme stocke les incohérences dans le dossier \lstbash{tests}.
+
+\item \lstbash{./bench.sh} exécute le programme sur des entrées de taille croissante (conservées) et affiche sur la sortie standard le contenu d'un fichier .dat utilisable dans \lstbash{pgfplot} pour tracer un graphe.
 \end{itemize}
 
 \section{Détails d'implémentation}
