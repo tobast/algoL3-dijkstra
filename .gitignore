@@ -33,6 +33,9 @@
 
 # output
 dijkstra
+checker/checker
+tests/*
 
 # vim
 *.swp
+
