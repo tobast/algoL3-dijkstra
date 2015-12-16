@@ -36,11 +36,9 @@ void dijkstra(Graph* g, int s, int* res, int* ancestors){
 	free(seen);
 }
 
-int dijkstra(Graph* g, int s, int* res, int* ancestors){
+int dijkstra_bound(Graph* g, int s, int* UNUSED(res), int* UNUSED(ancestors)){
 	return 1 + fh_create_bound() + (g->nbVertices)*5 
-		+ fh_insert_bound(&queue, makeTreeNode(0,s,s)) 
+		+ fh_insert_bound(NULL, makeTreeNode(0,s,s)) 
 		+ makeTreeNode_bound(0,s,s)
-		+ (g->nbVertices)
-			*(6 + fh_insert_bound(fh_create(), makeTreeNode(0, 0, 0)))
-
+		+ (g->nbVertices)*(6 + fh_insert_bound(NULL, makeTreeNode(0, 0, 0)));
 }
