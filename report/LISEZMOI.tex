@@ -1,0 +1,66 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{my_listings}
+
+\author{Théophile \textsc{Bastian} et Noémie \textsc{Cartier}}
+\title{Rapport de projet d'algorithmique -- Algorithme de \textsc{Dijkstra}}
+
+
+
+\begin{document}
+\maketitle
+
+\section{Utilisation}
+
+\subsection{Compilation}
+
+Pour compiler, il faut se placer dans le dossier racine et exécuter la commande \texttt{make}~; pour réinitialiser le dossier, et supprimer les fichiers créés par \texttt{make}, on peut exécuter la commande \texttt{make clean}.
+
+L'exécutable produit s'appelle \texttt{dijkstra}.
+
+\subsection{Formatage de l'entrée et options}
+
+L'entrée doit se présenter sous la forme d'un graphe orienté pondéré au format canonique tel que précisé sur la page web du projet, suivi du nombre de sources à partir desquelles on veut exécuter l'algorithme de Dijkstra, puis, pour chacune de ces sources, de son identifiant dans le graphe (son numéro de nœud).
+
+\paragraph{Exemple}
+
+\begin{lstlisting}
+$./dijkstra
+ 6 10                                                                            
+ 0 1 5                                                                           
+ 1 3 0                                                                           
+ 1 4 1                                                                           
+ 1 2 3                                                                           
+ 2 3 5                                                                           
+ 2 3 3                                                                           
+ 3 4 0                                                                           
+ 3 4 1                                                                           
+ 4 3 4                                                                           
+ 4 0 5                                                                           
+ 1 0  
+\end{lstlisting}
+
+Les options qui peuvent être passées à \texttt{./dijkstra} sont~:
+\begin{itemize}
+\item \lstbash{--naive}~: applique l'algorithme de Dijkstra avec une structure de file de priorité naïve et non optimisée~;
+\item \lstbash{--dists-only}~: affiche uniquement les distances entre la source et les sommets, sans indiquer le chemin à parcourir.
+\end{itemize}
+
+\subsection{Formatage de sortie}
+
+Les sorties se présentent sous la forme d'une suite de lignes, sous uns des deux formes suivantes~:
+\begin{lstlisting}
+[numéro du sommet]: [distance au sommet], [chemin qui y mène]
+[numéro du sommet]: +∞
+\end{lstlisting}
+
+\subsection{Outils}
+
+\end{document}
