@@ -31,7 +31,7 @@ for i in `seq 1 $1`; do
 	if (( $fail != 0)) ; then
 		>&2 echo "FAILED TEST saved as tests/${failcount}.in,png"
 		cp tests/cur.in tests/${failcount}.in
-		cp tests/cur.png tests/${failcount}.png
+#		cp tests/cur.png tests/${failcount}.png
 		let "failcount = failcount + 1"
 	fi
 	rm tests/cur*
