@@ -1,12 +1,12 @@
 #!/bin/bash
 # Generates naive, opti time curves for growing |V| values
 
-mkdir -p "benchFiles/"
+mkdir -p "benchs/"
 echo -e "nbVert\tnaive\topti"
 
 for nbVert in `seq 10000 1000 100000`; do
-	if [ ! -f "benchFiles/${nbVert}.in" ]; then
-		python3 ./genRandGraph.py "$nbVert" 2>/dev/null > benchFiles/$nbVert.in
+	if [ ! -f "benchs/${nbVert}.in" ]; then
+		python3 ./genRandGraph.py "$nbVert" 2>/dev/null > benchs/$nbVert.in
 	fi
 	/usr/bin/time -f "%e" ./dijkstra < benchs/$nbVert.in \
 		> /dev/null 2>tests/cur.time
