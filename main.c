@@ -20,10 +20,13 @@
 Arguments args(int argc, char** argv) {
 	Arguments out;
 	out.useNaiveDijkstra = false;
+	out.printDistsOnly = false;
 
 	for(int par=1; par < argc; par++) {
 		if(strcmp(argv[par], "--naive") == 0)
 			out.useNaiveDijkstra = true;
+		else if(strcmp(argv[par], "--dists-only") == 0)
+			out.printDistsOnly = true;
 	}
 	return out;
 }
@@ -71,12 +74,16 @@ int main(int argc, char** argv) {
 			if(distances[vert] < 0)
 				printf("%d: +∞\n", vert);
 			else {
-				printf("%d: %d, ", vert, distances[vert]);
-				ExtendList path = el_create(1);
-				findPath(vert, ancestors, &path);
-				for(int pathPos=path.curLength-1; pathPos > 0; pathPos--)
-					printf("%d -> ", path.list[pathPos]);
-				printf("%d\n", vert);
+				if(prgmArgs.printDistsOnly)
+					printf("%d: %d\n", vert, distances[vert]);
+				else {
+					printf("%d: %d, ", vert, distances[vert]);
+					ExtendList path = el_create(1);
+					findPath(vert, ancestors, &path);
+					for(int pathPos=path.curLength-1; pathPos > 0; pathPos--)
+						printf("%d -> ", path.list[pathPos]);
+					printf("%d\n", vert);
+				}
 			}
 		}
 	}
