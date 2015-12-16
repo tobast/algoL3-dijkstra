@@ -1,13 +1,16 @@
 #!/usr/bin/python
 
 ############################# CONSTANTS #######################################
-NB_VERT = 1000 
+NB_VERT = 10000 
 DEGREE_RANGE = (1,3)
 WEIGHT_RANGE = (0,5)
 ###############################################################################
 
 from random import randint
 import sys
+
+if len(sys.argv) > 0:
+	NB_VERT = int(sys.argv[1])
 
 def randInRange(x):
 	return randint(x[0],x[1])
