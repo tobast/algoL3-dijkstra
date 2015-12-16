@@ -9,7 +9,7 @@ OBJS=genericStruct.o extendLists.o tree.o linkedLists.o fiboHeap.o graph.o \
 all: $(TARGET) $(CHECKER)
 
 $(CHECKER):
-	g++ -Wall -Wextra -O2 $(CHECKER).cpp -o $(CHECKER)
+	g++ -Wall -Wextra -Wno-unused-result -O2 $(CHECKER).cpp -o $(CHECKER)
 $(TARGET): $(OBJS)
 	$(CC) $^ $(CCFLAGS) $(CCLIBS) -o $@
 
