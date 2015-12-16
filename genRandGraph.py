@@ -9,7 +9,7 @@ WEIGHT_RANGE = (0,5)
 from random import randint
 import sys
 
-if len(sys.argv) > 0:
+if len(sys.argv) > 1:
 	NB_VERT = int(sys.argv[1])
 
 def randInRange(x):
