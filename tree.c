@@ -14,7 +14,7 @@ Tree* tr_create(TreeNode val) {
 	Tree* tr = malloc(sizeof(Tree));
 	tr->child = NULL;
 	tr->sibling = NULL;
-	tr->subtreeSize = 0;
+	tr->subtreeSize = 1;
 	tr->val = val;
 	return tr;
 }
@@ -54,6 +54,7 @@ int tr_addChild_bound(Tree* UNUSED(node), Tree* UNUSED(subNode)) {
 }
 
 Tree* tr_merge(Tree* tr1, Tree* tr2) {
+	assert(tr1->subtreeSize == tr2->subtreeSize);
 	if(tr1->val.weight < tr2->val.weight) {
 		tr_addChild(tr1, tr2);
 		return tr1;

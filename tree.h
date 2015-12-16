@@ -12,6 +12,7 @@
 #define DEF_TREE
 
 #include <stdlib.h>
+#include <assert.h>
 #include "genericStruct.h"
 
 typedef struct Tree {
