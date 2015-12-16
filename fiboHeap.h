@@ -13,6 +13,8 @@
 
 #include "linkedLists.h"
 #include "genericStruct.h"
+#include <time.h>
+#include <stdio.h>
 
 typedef struct FiboHeap {
 	LinkedList* trees; // Pointing to the minimal element.

@@ -111,38 +111,37 @@ TreeNode fh_extractMin(FiboHeap* fh) {
 	// Now the list does not contain the minimum anymore, but contains all its
 	// children as new roots.
 
-	// According to Introduction to algorithms, D(n) <= ln(n)
+	// According to Introduction to algorithms, D(n) <= ln(n). Let's take a
+	// bit more.
 	LinkedList** elemOfDegree =
 		(LinkedList**) calloc(2 * intlog2(fh->totElem) + 1,
 			sizeof(LinkedList*));
 
-	// Iterates from fh->trees->next to fh->trees INCLUSIVE
-	// Keeps a valid fh->trees pointer
-	elemOfDegree[fh->trees->val->subtreeSize] = fh->trees;
+	/* To ensure that the iteration goes all around the circular linked list,
+	 even when we mess a bit around with its contents while iterating,
+	 we add a dummy element which will be a "beginning of list marker",
+	 and we delete it after.
+	*/
+	ll_insert_next(fh->trees, tr_create(makeTreeNode(-1,-1,-1))); // DUMMY
+	fh->trees = fh->trees->next; // Now points to the dummy elem.
 	for(LinkedList* it=fh->trees->next; it != fh->trees; it = it->next) {
 		int degr = it->val->subtreeSize;
-		short moveHead = false;
-		if(elemOfDegree[degr] != NULL) {
-			if(elemOfDegree[degr] == fh->trees) {
-				// If we're gonna delete fh->trees->next in this operation
-				if(it == fh->trees->next)
-					moveHead = true;
-				else
-					fh->trees = fh->trees->next;
-			}
-			Tree* nTree = tr_merge(elemOfDegree[degr]->val, it->val);
-			ll_delete_next(elemOfDegree[degr]->prev);
-			elemOfDegree[degr] = NULL;
+		int ldegr = intlog2(degr); // The elemOfDegree list is of log size,
+			// thus we need to take the logarithm of the degree.
+		if(elemOfDegree[ldegr] != NULL) {
+			Tree* nTree = tr_merge(elemOfDegree[ldegr]->val, it->val);
+			// CORRECT because we have at least 2 elements.
+			ll_delete_next(elemOfDegree[ldegr]->prev);
+			elemOfDegree[ldegr] = NULL;
 			it = it->prev;
 			it = ll_delete_next(it);
 			it = ll_insert_next(it, nTree);
-			// fh->trees->next was deleted, the rightful head is nTree
-			if(moveHead)
-				fh->trees = it->next;
 		}
 		else
-			elemOfDegree[degr] = it;
+			elemOfDegree[ldegr] = it;
 	}
+	fh->trees = fh->trees->prev;
+	fh->trees = ll_delete_next(fh->trees); // Delete dummy
 
 	free(elemOfDegree);
 
@@ -150,10 +149,9 @@ TreeNode fh_extractMin(FiboHeap* fh) {
 
 	// Now finds the minimum element
 	LinkedList* curMin = fh->trees;
-	for(LinkedList* it=fh->trees->next; it != fh->trees; it = it->next) {
+	for(LinkedList* it=fh->trees->next; it != fh->trees; it = it->next)
 		if(it->val->val.weight < curMin->val->val.weight)
 			curMin = it;
-	}
 	fh->trees = curMin;
 
 	return out;
