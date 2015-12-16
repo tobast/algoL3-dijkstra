@@ -77,7 +77,7 @@ void naiveDijkstra(Graph* g, int s, int* res, int* ancestors){
 
 	free(seen);
 }
-int naiveDijkstra_bound(Graph* g, int s, int* UNUSED(res)){
+int naiveDijkstra_bound(Graph* g, int s, int* UNUSED(res), int* UNUSED(a)){
 	return 5 + 3*el_create_bound(0) + (g->nbVertices)*4 
 		+ ((g->adj[s]).curLength)*(2+3*el_push_back_bound_amz(NULL, 0))
 		+ (g->nbEdges)*(1 + (g->nbEdges)*10 + tripleCreate_bound(0,0,0))

@@ -24,3 +24,4 @@ typedef struct Triple {
  * @param ancestors: same.
  **/
 void naiveDijkstra(Graph* g, int s, int* res, int* ancestors);
+int naiveDijkstra_bound(Graph* g, int s, int* res, int* ancestors);

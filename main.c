@@ -21,12 +21,15 @@ Arguments args(int argc, char** argv) {
 	Arguments out;
 	out.useNaiveDijkstra = false;
 	out.printDistsOnly = false;
+	out.printTheoreticalBound = false;
 
 	for(int par=1; par < argc; par++) {
 		if(strcmp(argv[par], "--naive") == 0)
 			out.useNaiveDijkstra = true;
 		else if(strcmp(argv[par], "--dists-only") == 0)
 			out.printDistsOnly = true;
+		else if(strcmp(argv[par], "--print-bound") == 0)
+			out.printTheoreticalBound = true;
 	}
 	return out;
 }
@@ -64,9 +67,17 @@ int main(int argc, char** argv) {
 		// BEHOLD, as Dijkstra itself is executed.
 		if(prgmArgs.useNaiveDijkstra) { // Use the naive array-based version
 			naiveDijkstra(&graph, sourceVert, distances, ancestors);
+			if(prgmArgs.printTheoreticalBound) {
+				printf("BOUND: %d\n", naiveDijkstra_bound(
+					&graph, sourceVert, distances, ancestors));
+			}
 		}
 		else { // Here comes the real stuff.
 			dijkstra(&graph, sourceVert, distances, ancestors);
+			if(prgmArgs.printTheoreticalBound) {
+				printf("BOUND: %d\n",
+					dijkstra_bound(&graph, sourceVert, distances, ancestors));
+			}
 		}
 
 		// Output path

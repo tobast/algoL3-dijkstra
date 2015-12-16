@@ -29,6 +29,7 @@ typedef struct TreeNode {
 typedef struct Arguments {
 	short useNaiveDijkstra;
 	short printDistsOnly;
+	short printTheoreticalBound;
 } Arguments;
 
 TreeNode makeTreeNode(int weight, int graphNode, int ancestor);
