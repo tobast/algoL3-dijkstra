@@ -10,6 +10,8 @@
 
 #include "dijkstra.h"
 
+#include <time.h>
+
 void dijkstra(Graph* g, int s, int* res, int* ancestors){
 	if (s >= g->nbVertices)
 		assert("The source isn't in the graph." == 0);
@@ -23,7 +25,9 @@ void dijkstra(Graph* g, int s, int* res, int* ancestors){
 	}
 	fh_insert(&queue, makeTreeNode(0, s, s));
 	while(queue.trees != NULL){
+		clock_t begCl=clock();
 		TreeNode n = fh_extractMin(&queue);
+		fprintf(stderr, "%ld CLOCKS\n", clock() - begCl);
 		if(seen[n.graphNode] == 0){
 			res[n.graphNode] = n.weight;
 			ancestors[n.graphNode] = n.ancestor;
@@ -39,9 +43,9 @@ void dijkstra(Graph* g, int s, int* res, int* ancestors){
 			}
 		}
 	}
-
 	fh_clean(&queue);
 	free(seen);
+	free(minWeight);
 }
 
 int dijkstra_bound(Graph* g, int s, int* UNUSED(res), int* UNUSED(ancestors)){
