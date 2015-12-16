@@ -24,7 +24,7 @@ int tripleCreate_bound(int UNUSED(a), int UNUSED(b), int UNUSED(c)){
 Triple naiveMin(ExtendList* origin, ExtendList* end, ExtendList* dist){
 	int indMin = 0;
 	for(int i = 1 ; i < end->curLength ; i++)
-		if((0 < (dist->list)[i]) && (dist->list)[i] < (dist->list)[indMin])
+		if((0 <= (dist->list)[i]) && (dist->list)[i] < (dist->list)[indMin])
 			indMin = i;
 	Triple t = tripleCreate((origin->list)[indMin],(end->list)[indMin],
 		(dist->list)[indMin]);
