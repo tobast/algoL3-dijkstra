@@ -10,7 +10,6 @@
 
 #include "graph.h"
 #include "fiboHeap.h"
-#include <stdio.h>
 
 void dijkstra(Graph* g, int s, int* res, int* ancestors);
 int dijkstra_bound(Graph* g, int s, int* res, int* ancestors);
