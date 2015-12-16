@@ -19,11 +19,7 @@ void dijkstra(Graph* g, int s, int* res, int* ancestors){
 		res[i] = -1;
 		ancestors[i] = -1;
 	}
-	res[s] = 0;
-	ancestors [s] = 0;
-	for(int i = 0 ; i < (g->adj[s]).curLength ; i++)
-		fh_insert(&queue,
-			makeTreeNode((g->weights[s]).list[i],(g->adj[s]).list[i],s));
+	fh_insert(&queue, makeTreeNode(0, s, s));
 	while(queue.trees != NULL){
 		TreeNode n = fh_extractMin(&queue);
 		if(seen[n.graphNode] == 0){
@@ -38,4 +34,13 @@ void dijkstra(Graph* g, int s, int* res, int* ancestors){
 		}
 	}
 	free(seen);
+}
+
+int dijkstra(Graph* g, int s, int* res, int* ancestors){
+	return 1 + fh_create_bound() + (g->nbVertices)*5 
+		+ fh_insert_bound(&queue, makeTreeNode(0,s,s)) 
+		+ makeTreeNode_bound(0,s,s)
+		+ (g->nbVertices)
+			*(6 + fh_insert_bound(fh_create(), makeTreeNode(0, 0, 0)))
+
 }
