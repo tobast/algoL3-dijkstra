@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
 ############################# CONSTANTS #######################################
-NB_VERT = 10
-DEGREE_RANGE = (1,5)
-WEIGHT_RANGE = (0,100)
+NB_VERT = 5 
+DEGREE_RANGE = (1,3)
+WEIGHT_RANGE = (0,5)
 ###############################################################################
 
 from random import randint
@@ -30,5 +30,5 @@ for edge in edges:
 
 print("}", file=sys.stderr)
 
-
+print("1 0")
 
