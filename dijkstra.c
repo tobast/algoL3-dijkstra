@@ -15,9 +15,11 @@ void dijkstra(Graph* g, int s, int* res, int* ancestors){
 		assert("The source isn't in the graph." == 0);
 	FiboHeap queue = fh_create();
 	int* seen = (int*)calloc((g->nbVertices),sizeof(int));
+	int* minWeight = (int*)malloc((g->nbVertices)*sizeof(int));
 	for(int i = 0 ; i < g->nbVertices ; i++){
 		res[i] = -1;
 		ancestors[i] = -1;
+		minWeight[i] = -1;
 	}
 	fh_insert(&queue, makeTreeNode(0, s, s));
 	while(queue.trees != NULL){
@@ -30,8 +32,10 @@ void dijkstra(Graph* g, int s, int* res, int* ancestors){
 				if(seen[g->adj[n.graphNode].list[i]] > 0)
 					continue;
 				int dist = n.weight + (g->weights[n.graphNode]).list[i];
-				fh_insert(&queue, makeTreeNode(dist, 
-					(g->adj[n.graphNode]).list[i], n.graphNode));
+				if (dist < minWeight[(g->adj[n.graphNode]).list[i]] 
+						|| minWeight[(g->weights[n.graphNode]).list[i]] < 0)
+					fh_insert(&queue, makeTreeNode(dist, 
+						(g->adj[n.graphNode]).list[i], n.graphNode));
 			}
 		}
 	}
