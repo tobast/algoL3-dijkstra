@@ -6,7 +6,7 @@ failcount=0
 mkdir -p tests
 for i in `seq 1 $1`; do
 	echo "$i..."
-	./genRandGraph.sh tests/cur
+	./genRandGraph.sh --no-dot tests/cur
 	./dijkstra --dists-only --naive < tests/cur.in > tests/curNaive.out
 	./dijkstra --dists-only < tests/cur.in > tests/cur.out
 	checker/checker < tests/cur.in > tests/curCheck.out
@@ -29,9 +29,8 @@ for i in `seq 1 $1`; do
 	fi
 
 	if (( $fail != 0)) ; then
-		>&2 echo "FAILED TEST saved as tests/${failcount}.in,png"
+		>&2 echo "FAILED TEST saved as tests/${failcount}.in"
 		cp tests/cur.in tests/${failcount}.in
-#		cp tests/cur.png tests/${failcount}.png
 		let "failcount = failcount + 1"
 	fi
 	rm tests/cur*
