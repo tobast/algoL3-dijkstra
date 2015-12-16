@@ -70,6 +70,11 @@ void naiveDijkstra(Graph* g, int s, int* res, int* ancestors){
 			}
 		}
 	}
+
+	el_clean(&origin);
+	el_clean(&end);
+	el_clean(&weights);
+
 	free(seen);
 }
 int naiveDijkstra_bound(Graph* g, int s, int* UNUSED(res)){

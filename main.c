@@ -83,10 +83,13 @@ int main(int argc, char** argv) {
 					for(int pathPos=path.curLength-1; pathPos > 0; pathPos--)
 						printf("%d -> ", path.list[pathPos]);
 					printf("%d\n", vert);
+					el_clean(&path);
 				}
 			}
 		}
 	}
+
+	g_clean(&graph);
 
 	free(ancestors);
 	free(distances);

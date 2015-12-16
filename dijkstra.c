@@ -33,6 +33,8 @@ void dijkstra(Graph* g, int s, int* res, int* ancestors){
 			}
 		}
 	}
+
+	fh_clean(&queue);
 	free(seen);
 }
 
