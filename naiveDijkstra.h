@@ -9,7 +9,7 @@
  *****************************************************************************/
 
 #include "graph.h"
-
+#include <stdio.h>
 
 typedef struct Triple {
 	int a;

@@ -48,18 +48,14 @@ void naiveDijkstra(Graph* g, int s, int* res, int* ancestors){
 	ExtendList origin = el_create(0);
 	ExtendList end = el_create(0);
 	ExtendList weights = el_create(0);
-	int* seen = (int*)malloc((g->nbVertices)*sizeof(int));
+	int* seen = (int*)calloc((g->nbVertices),sizeof(int));
 	for(int i = 0 ; i < g->nbVertices ; i++){
 		res[i] = (-1);
 		ancestors[i] = (-1);
 	}
-	res[s] = 0;
-	ancestors[s] = 0;
-	for(int i = 0 ; i < (g->adj[s]).curLength ; i++){
-		el_push_back(&origin,s);
-		el_push_back(&end, (g->adj[s]).list[i]);
-		el_push_back(&weights, (g->weights[s]).list[i]);
-	}
+	el_push_back(&origin,s);
+	el_push_back(&end, s);
+	el_push_back(&weights, 0);
 	while(end.curLength != 0){
 		Triple t = naiveMin(&origin, &end, &weights);
 		if(seen[t.b] == 0){
