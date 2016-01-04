@@ -127,15 +127,18 @@ De plus, nous avons utilisé \lstbash{valgrind} pour vérifier l'absence de fuit
 
 \section{Performances}
 
-Nous avons d'abord généré aléatoirement des graphes ayant entre 10000 et 100000 sommets (avec un pas de 1000), de degré sortant aléatoire compris entre 1 et 3, puis nous avons utilisé \lstbash{./bench.sh} pour générer la figure \ref{fig:graph} comparant les temps d'exécution de l'algorithme naïf et de l'algorithme des tas de Fibonacci.
+Nous avons d'abord généré aléatoirement des graphes ayant entre 10000 et 100000 sommets (avec un pas de 1000), de degré sortant aléatoire, puis nous avons utilisé \lstbash{./bench.sh} pour générer les figures \ref{fig:graphlow} (degrés sortants entre 1 et 3) et \ref{fig:graphhigh} (degrés sortants entre 0 et 10) comparant les temps d'exécution de l'algorithme naïf et de l'algorithme des tas de Fibonacci.
 
-Nous pensons que les aberrations visibles en début de graphe sont dues à la génération aléatoire des graphes.
+Nous avons également généré une courbe (figure \ref{fig:graphopti}) du temps d'exécution de l'algorithme basé sur les tas de Fibonacci pour de gros graphes, qui est bien quasi-linéaire.
+
+Les aberrations visibles en début de graphe sont dues à la génération aléatoire des graphes (par exemple, la source est de degré sortant 0, ou dans une composante connexe restreinte).
 
 \begin{figure}[h!]
   \begin{center}
     \begin{tikzpicture}
       \begin{axis}[
           width=\linewidth, % Scale the plot to \linewidth
+          height=0.65\textwidth, % Scale the plot to \linewidth
           grid=major, % Display a grid
           grid style={dashed,gray!30}, % Set the style
           xlabel=Nombre de sommets, % Set the labels
@@ -145,15 +148,60 @@ Nous pensons que les aberrations visibles en début de graphe sont dues à la g�
           legend style={at={(0.5,-0.2)},anchor=north},
           x tick label style={rotate=90,anchor=east}
         ]
-        \addplot table[x=nbVert,y=naive,col sep=tab] {bench.dat} node[above, pos=1] {Naïf};
-        \addplot table[x=nbVert,y=opti,col sep=tab] {bench.dat} node[above, pos=1] {Fibonacci};
+        \addplot table[x=nbVert,y=naive,col sep=tab] {bench_lowdegr.dat} node[above, pos=1] {Naïf};
+        \addplot table[x=nbVert,y=opti,col sep=tab] {bench_lowdegr.dat} node[above, pos=1] {Fibonacci};
         \end{axis}
     \end{tikzpicture}
-    \caption{Comparaison des temps d'exécution réels}
-    \label{fig:graph}
+    \caption{Comparaison des temps d'exécution réels -- degrés faibles (1-3)}
+    \label{fig:graphlow}
   \end{center}
 \end{figure}
 
-Les performances constatées sont bien plus mauvaises que prévues, et nous espérons pouvoir les améliorer significativement d'ici la soutenance.
+\begin{figure}[h!]
+  \begin{center}
+    \begin{tikzpicture}
+      \begin{axis}[
+          width=\linewidth, % Scale the plot to \linewidth
+          height=0.65\textwidth, % Scale the plot to \linewidth
+          grid=major, % Display a grid
+          grid style={dashed,gray!30}, % Set the style
+          xlabel=Nombre de sommets, % Set the labels
+          ylabel=Temps d'exécution,
+          x unit=, % Set the respective units
+          y unit=\si{\second},
+          legend style={at={(0.5,-0.2)},anchor=north},
+          x tick label style={rotate=90,anchor=east}
+        ]
+        \addplot table[x=nbVert,y=naive,col sep=tab] {bench_highdegr.dat} node[above, pos=1] {Naïf};
+        \addplot table[x=nbVert,y=opti,col sep=tab] {bench_highdegr.dat} node[above, pos=1] {Fibonacci};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Comparaison des temps d'exécution réels -- degrés élevés (0-10)}
+    \label{fig:graphhigh}
+  \end{center}
+\end{figure}
+
+\begin{figure}[h!]
+  \begin{center}
+    \begin{tikzpicture}
+      \begin{axis}[
+          width=\linewidth, % Scale the plot to \linewidth
+          height=0.65\textwidth, % Scale the plot to \linewidth
+          grid=major, % Display a grid
+          grid style={dashed,gray!30}, % Set the style
+          xlabel=Nombre de sommets, % Set the labels
+          ylabel=Temps d'exécution,
+          x unit=, % Set the respective units
+          y unit=\si{\second},
+          legend style={at={(0.5,-0.2)},anchor=north},
+          x tick label style={rotate=90,anchor=east}
+        ]
+        \addplot table[x=nbVert,y=opti,col sep=tab] {bench_opti.dat} node[above, pos=1] {Fibonacci};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Courbe des temps d'exécution -- degrés élevés (2-10)}
+    \label{fig:graphopti}
+  \end{center}
+\end{figure}
 
 \end{document}
