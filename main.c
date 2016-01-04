@@ -22,12 +22,19 @@ Arguments args(int argc, char** argv) {
 	out.useNaiveDijkstra = false;
 	out.printDistsOnly = false;
 	out.printTheoreticalBound = false;
+	out.pathTo = -1;
 
 	for(int par=1; par < argc; par++) {
 		if(strcmp(argv[par], "--naive") == 0)
 			out.useNaiveDijkstra = true;
 		else if(strcmp(argv[par], "--dists-only") == 0)
 			out.printDistsOnly = true;
+		else if(strcmp(argv[par], "--path-to") == 0) {
+			if(par == argc-1)
+				continue;
+			out.pathTo = atoi(argv[par+1]);
+			par++;
+		}
 		else if(strcmp(argv[par], "--print-bound") == 0)
 			out.printTheoreticalBound = true;
 	}
@@ -38,6 +45,25 @@ void findPath(int pos, int* ancestors, ExtendList* outList) {
 	el_push_back(outList, pos);
 	if(pos != ancestors[pos])
 		findPath(ancestors[pos], ancestors, outList);
+}
+
+void dispResult(int vert, int* distances, Arguments prgmArgs, int* ancestors)
+{
+	if(distances[vert] < 0)
+		printf("%d: +∞\n", vert);
+	else {
+		if(prgmArgs.printDistsOnly)
+			printf("%d: %d\n", vert, distances[vert]);
+		else {
+			printf("%d: %d, ", vert, distances[vert]);
+			ExtendList path = el_create(1);
+			findPath(vert, ancestors, &path);
+			for(int pathPos=path.curLength-1; pathPos > 0; pathPos--)
+				printf("%d -> ", path.list[pathPos]);
+			printf("%d\n", vert);
+			el_clean(&path);
+		}
+	}
 }
 
 int main(int argc, char** argv) {
@@ -81,23 +107,12 @@ int main(int argc, char** argv) {
 		}
 
 		// Output path
-		for(int vert=0; vert < nbVert; vert++) {
-			if(distances[vert] < 0)
-				printf("%d: +∞\n", vert);
-			else {
-				if(prgmArgs.printDistsOnly)
-					printf("%d: %d\n", vert, distances[vert]);
-				else {
-					printf("%d: %d, ", vert, distances[vert]);
-					ExtendList path = el_create(1);
-					findPath(vert, ancestors, &path);
-					for(int pathPos=path.curLength-1; pathPos > 0; pathPos--)
-						printf("%d -> ", path.list[pathPos]);
-					printf("%d\n", vert);
-					el_clean(&path);
-				}
-			}
+		if(prgmArgs.pathTo < 0) {
+			for(int vert=0; vert < nbVert; vert++)
+				dispResult(vert, distances, prgmArgs, ancestors);
 		}
+		else
+			dispResult(prgmArgs.pathTo, distances, prgmArgs, ancestors);
 	}
 
 	g_clean(&graph);

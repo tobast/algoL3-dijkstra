@@ -30,6 +30,7 @@ typedef struct Arguments {
 	short useNaiveDijkstra;
 	short printDistsOnly;
 	short printTheoreticalBound;
+	int pathTo;
 } Arguments;
 
 TreeNode makeTreeNode(int weight, int graphNode, int ancestor);
