@@ -61,7 +61,7 @@ void OsmToGraph::newVert(VertId origId, double lat, double lon,
 		ofstream& outCorresp)
 {
 	VertId nId = vertices.size();
-	outCorresp << origId << ' ' << nId << '\n';
+	outCorresp << origId << ' ' << nId << ' ' << lat << ' ' << lon << '\n';
 	mappedVerts.insert(make_pair(origId, nId));
 	vertices.push_back(Vert(nId, lat, lon));
 }
