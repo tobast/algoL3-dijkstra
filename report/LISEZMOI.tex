@@ -62,7 +62,9 @@ Les options qui peuvent être passées à \lstbash{./dijkstra} sont~:
 \begin{itemize}
 \item \lstbash{--naive}~: applique l'algorithme de Dijkstra avec une structure de file de priorité naïve et non optimisée~;
 \item \lstbash{--dists-only}~: affiche uniquement les distances entre la source et les sommets, sans indiquer le chemin à parcourir~;
-\item \lstbash{--print-bound}~: affiche \lstbash{bound: <n>}, où n est le nombre d'opérations effectuées supposées.
+\item \lstbash{--print-bound}~: affiche \lstbash{bound: <n>}, où n est le nombre d'opérations effectuées supposées~;
+\item \lstbash{--undirected}~: le graphe pris en entrée est considéré non-orienté (peu optimisé~: les arêtes sont juste recopiées en sens inverse)~;
+\item \lstbash{--path-to [noeud]}~: affiche sur la sortie \emph{uniquement} le chemin allant à \lstbash{noeud}.
 \end{itemize}
 
 \subsection{Formatage de sortie}
