@@ -23,6 +23,7 @@ Arguments args(int argc, char** argv) {
 	out.printDistsOnly = false;
 	out.printTheoreticalBound = false;
 	out.pathTo = -1;
+	out.undirected = false;
 
 	for(int par=1; par < argc; par++) {
 		if(strcmp(argv[par], "--naive") == 0)
@@ -35,6 +36,8 @@ Arguments args(int argc, char** argv) {
 			out.pathTo = atoi(argv[par+1]);
 			par++;
 		}
+		else if(strcmp(argv[par], "--undirected") == 0)
+			out.undirected = true;
 		else if(strcmp(argv[par], "--print-bound") == 0)
 			out.printTheoreticalBound = true;
 	}
@@ -77,6 +80,8 @@ int main(int argc, char** argv) {
 		int from,to,weight;
 		scanf("%d %d %d", &from, &to, &weight);
 		g_addEdge(&graph, from, to, weight);
+		if(prgmArgs.undirected)
+			g_addEdge(&graph, to, from, weight);
 	}
 
 

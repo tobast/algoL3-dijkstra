@@ -31,6 +31,7 @@ typedef struct Arguments {
 	short printDistsOnly;
 	short printTheoreticalBound;
 	int pathTo;
+	short undirected;
 } Arguments;
 
 TreeNode makeTreeNode(int weight, int graphNode, int ancestor);
