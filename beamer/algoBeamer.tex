@@ -22,6 +22,9 @@
 \pgfplotsset{compat=newest}
 \usepgfplotslibrary{units}
 
+\usepackage{xcolor}
+\newcommand{\todo}[1]{\colorbox{yellow}{\color{red}#1}}
+
 %\subject{} 
 \begin{document}
 
@@ -33,8 +36,6 @@
 %\tableofcontents
 %\end{frame}
 
-\section{Algorithme}
-
 \begin{frame}[fragile]{Dijkstra}
 \alert{Idée~:} BFS par distance à l'origine croissante.
 
@@ -42,6 +43,7 @@
 \begin{lstlisting}[language=C++]
 toProcess = file de priorité min vide
 toProcess.insert(origine,0)
+dists.fill(-1)
 while(not toProcess.isEmpty()) {
 	curNode,curDist = toProcess.pop()
 	if(dists[curNode] >= 0)
@@ -58,19 +60,7 @@ while(not toProcess.isEmpty()) {
 
 \end{frame}
 
-\begin{frame}{Tas de \textsc{Fibonacci}}
-\begin{block}{Complexités}
-Insertion~: $\bigO(1)$\\
-Suppression~: $\bigO(\log(N))$
-\end{block}
-
-\vspace{1em}
-\begin{figure}[H]
-\includegraphics[width=0.6\linewidth]{fiboheap.png}
-\end{figure}
-\end{frame}
-
-\section{Implémentations et performances}
+\section{Version naïve}
 
 \subsection{Implémentation naïve}
 \begin{frame}{Implémentation naïve}
@@ -79,15 +69,39 @@ Suppression~: $\bigO(\log(N))$
 
 \vspace{1em}
 Nécessite des \alert{tableaux à taille variable}.
+
+\vspace{1em}
+\begin{block}{Graphes}
+\begin{itemize}
+\item Nombre de sommets $\card{V}$ fixe
+\item Listes d'adjacence~: tableau de $\card{V}$ tableaux à taille variable de voisins (et le poids de l'arête)
+\end{itemize} 
+\end{block}
 \end{frame}
 
-\subsection{Implémentation efficace}
+\section{Tas de Fibonacci}
+
+\subsection{Algorithme}
+
+\begin{frame}{Tas de \textsc{Fibonacci}}
+\begin{block}{Complexités}
+Insertion~: $\bigO(1)$\\
+Suppression~: $\bigO(\log(N))$ (amorti)
+\end{block}
+
+\vspace{1em}
+\begin{figure}[H]
+\includegraphics[width=0.6\linewidth]{fiboheap.png}
+\end{figure}
+\end{frame}
+
+\subsection{Implémentation}
 
 \begin{frame}{Structures nécessaires}
 \begin{itemize}
-\item Structure d'\alert{arbre}~;
-\item structure de \alert{liste doublement chaînée cyclique}~;
-\item structure de \alert{tas de Fibonacci}.
+\item Structure d'\alert{arbre}
+\item Structure de \alert{liste doublement chaînée cyclique}
+\item Structure de \alert{tas de Fibonacci}
 \end{itemize}
 \end{frame}
 
@@ -96,7 +110,7 @@ Nécessite des \alert{tableaux à taille variable}.
 \item Structure récursive
 \item Pointeur \lstc{child}
 \item Pointeur \lstc{sibling}
-\item Portée des variables~: \lstc{malloc}
+\item Portée des variables $\leadsto$ \lstc{malloc}
 \end{itemize}
 \end{frame}
 
@@ -129,6 +143,7 @@ Nécessite des \alert{tableaux à taille variable}.
 \item Comparaison entre les deux implémentations et une implémentation de référence C++ utilisant la STL
 \item Tests automatisés sur 10000 graphes de grande taille
 \item Erreur détectée et corrigée pour des arêtes de poids 0
+\item Pas de fuite de mémoire~: \lstbash{valgrind}
 \end{itemize}
 \end{frame}
 
@@ -136,14 +151,14 @@ Nécessite des \alert{tableaux à taille variable}.
 
 \begin{frame}{Performances}
 \begin{itemize}
-\item Tests de performance effectués comparant nos deux implémentations sur de très grands graphes de taille variable
+\item Tests de performance effectués comparant nos deux implémentations sur de très grands graphes aléatoires de taille variable
 \item Fibonacci~: quasi-linéaire
 \item Naïf~: quadratique
 \item Quelques aberrations sur les plus petits graphes, liées à des problèmes de connexité
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Comparatif -- degrés faibles}
+\begin{frame}{Comparatif -- degrés faibles (1 -- 3)}
 \begin{figure}
   \begin{center}                                                                
     \begin{tikzpicture}                                                         
@@ -163,13 +178,12 @@ Nécessite des \alert{tableaux à taille variable}.
         \addplot table[x=nbVert,y=opti,col sep=tab] {../report/bench_lowdegr.dat} node[above, pos=1] {Fibonacci};
         \end{axis}                                                              
     \end{tikzpicture}                                                           
-    \caption{Comparaison des temps d'exécution réels -- degrés faibles (1-3)}   
     \label{fig:graphlow}                                                        
   \end{center}
 \end{figure}
 \end{frame}
 
-\begin{frame}{Comparatif -- degrés élevés}
+\begin{frame}{Comparatif -- degrés élevés (0 -- 10)}
 \begin{figure}
   \begin{center}                                                                
     \begin{tikzpicture}                                                         
@@ -195,7 +209,7 @@ Nécessite des \alert{tableaux à taille variable}.
 \end{figure}
 \end{frame}
 
-\begin{frame}{Fibonacci -- degrés élevés}
+\begin{frame}{Fibonacci -- degrés élevés (2 -- 10)}
 \begin{figure}
   \begin{center}                                                                
     \begin{tikzpicture}                                                         
@@ -217,6 +231,57 @@ Nécessite des \alert{tableaux à taille variable}.
     \caption{Comparaison des temps d'exécution réels -- degrés faibles (1-3)}   
     \label{fig:graphlow}                                                        
   \end{center}
+\end{figure}
+\end{frame}
+
+\section{Bonus~: Dijkstra dans Paris}
+
+\subsection{Graphe de Paris~: formatage}
+
+\begin{frame}{Graphe de Paris~: formatage}
+\begin{itemize}
+\item Données de base~: OpenStreetMaps
+\item \alert{Réindexer} les n\oe uds pour avoir des IDs contigus partant de 0
+\item Maintenir une table de hachage pour garder la correspondance
+\item \alert{Arêtes}~: segments de \lstbash{way} successifs, distance
+\[ R_T \sqrt{\left(\Delta \Phi\right)^2 + \left(\cos\left(\Phi_m\right) \Delta \lambda\right)^2} \]
+\item Relations (OSM) ignorées
+\item Génère deux fichiers~: un graphe \emph{non-orienté} (option adaptée) et un fichier de correspondance des IDs.
+\end{itemize}
+\end{frame}
+
+\subsection{À une intersection donnée}
+
+\begin{frame}{Vers un lieu donné}
+\begin{itemize}
+\item Se rendre à l'intersection du \alert{boulevard Brune} et de l'\alert{avenue Jean Moulin} (aka avenue de la Porte de Châtillon)
+\item Google maps~: 2.9Km
+\item Notre Dijkstra~: 2849m (cohérent)
+\item Premier essai sur graphe non-orienté~: 3653m
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Carte associée}
+\begin{figure}
+\includegraphics[width=0.9\linewidth]{map1.png}
+\end{figure}
+\end{frame}
+
+\subsection{Aux lignes RATP}
+
+\begin{frame}{Aux lignes RATP}
+\begin{itemize}
+\item Récupération des noms, latitude, longitude des stations par ligne
+\item Pour chaque ligne, chaque station, trouver tous les nœuds à moins de 50m
+\item Lier les station à ces nœuds par leur distance à vol d'oiseau
+\item Dijkstra
+\item Relier les stations~: naïvement, $\bigO(\text{nbStat} \times \card{V})$. Raffinage du graphe pour supprimer les zones non-connexes.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{RER A}
+\begin{figure}
+\includegraphics[width=0.9\linewidth]{mapToRerA.png}
 \end{figure}
 \end{frame}
 
