@@ -257,7 +257,7 @@ Suppression~: $\bigO(\log(N))$ (amorti)
 \item Se rendre à l'intersection du \alert{boulevard Brune} et de l'\alert{avenue Jean Moulin} (aka avenue de la Porte de Châtillon)
 \item Google maps~: 2.9Km
 \item Notre Dijkstra~: 2849m (cohérent)
-\item Premier essai sur graphe non-orienté~: 3653m
+\item Premier essai sur graphe \alert{orienté}~: 3653m
 \end{itemize}
 \end{frame}
 
@@ -274,6 +274,7 @@ Suppression~: $\bigO(\log(N))$ (amorti)
 \item Récupération des noms, latitude, longitude des stations par ligne
 \item Pour chaque ligne, chaque station, trouver tous les nœuds à moins de 50m
 \item Lier les station à ces nœuds par leur distance à vol d'oiseau
+\item Lier les stations à un nœud \og ligne \fg{} avec poids 0
 \item Dijkstra
 \item Relier les stations~: naïvement, $\bigO(\text{nbStat} \times \card{V})$. Raffinage du graphe pour supprimer les zones non-connexes.
 \end{itemize}
@@ -283,6 +284,15 @@ Suppression~: $\bigO(\log(N))$ (amorti)
 \begin{figure}
 \includegraphics[width=0.9\linewidth]{mapToRerA.png}
 \end{figure}
+\end{frame}
+
+\section*{}
+
+\begin{frame}{Conclusion}
+\begin{itemize}
+\item Notre Dijkstra semble marcher sur tous les exemples
+\item Si vous voulez prendre la ligne de bus 321, n'y allez pas à pied. 22,848Km, c'est long.
+\end{itemize}
 \end{frame}
 
 \end{document}
